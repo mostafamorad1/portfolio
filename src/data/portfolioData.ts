@@ -81,6 +81,10 @@ export interface PortfolioContent {
     contactMe: string;
     badgeText: string;
     stats: { label: string; value: string }[];
+    pills: {
+      engineering: { title: string; subtitle: string };
+      solutions: string;
+    };
   };
   about: {
     title: string;
@@ -98,6 +102,7 @@ export interface PortfolioContent {
   skills: {
     title: string;
     subtitle: string;
+    allLabel: string;
     categories: {
       id: string;
       name: string;
@@ -131,6 +136,7 @@ export interface PortfolioContent {
   education: {
     title: string;
     subtitle: string;
+    degreesTitle: string;
     degrees: EducationItem[];
     certificatesTitle: string;
     certificates: CertificateItem[];
@@ -138,6 +144,7 @@ export interface PortfolioContent {
   achievements: {
     title: string;
     subtitle: string;
+    verifiedLabel: string;
     items: MilestoneItem[];
   };
   contact: {
@@ -199,6 +206,10 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
         { label: "Core Frameworks", value: "Next.js & Spark" },
         { label: "DEPI Trainee & Huawei", value: "Certified" },
       ],
+      pills: {
+        engineering: { title: "Data Engineering", subtitle: "ETL / Spark / SQL" },
+        solutions: "Next.js & BI Solutions",
+      },
     },
     about: {
       title: "About Me",
@@ -211,7 +222,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
         "Specialized in turning fragmented, raw data into clean, structured assets. My domain spans scalable data warehousing, SQL query optimization, robust database modeling (Relational & NoSQL), and high-performance full-stack web applications with Next.js.",
       uspTitle: "Unique Selling Proposition",
       uspText:
-        "I bridge the gap between raw data storage and actionable insights — ensuring high throughput, zero-downtime data pipelines, and optimized query performance for analytics, reporting, and AI workflows.",
+        "I help organizations optimize their operational performance through scalable data pipelines, Next.js web applications, and insightful BI analytics — ensuring high throughput, zero-downtime data pipelines, and optimized query performance for analytics, reporting, and AI workflows.",
       experienceTitle: "Professional Background",
       experienceText:
         "With rigorous training in the Digital Egypt Pioneers Initiative (DEPI) Data Engineering track, hands-on production web development at GEN Academy, and freelance data workflow engineering on Mindrift and OpenTrain AI, I deliver production-ready software and data platforms built for scale.",
@@ -220,6 +231,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     skills: {
       title: "Technical Skills",
       subtitle: "Comprehensive toolset across data engineering, analytics, and software development",
+      allLabel: "All Skills",
       categories: [
         {
           id: "data-engineering",
@@ -474,6 +486,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     education: {
       title: "Education & Certifications",
       subtitle: "Academic foundation in Computer Science and globally accredited industry credentials",
+      degreesTitle: "Academic Degrees & Programs",
       degrees: [
         {
           id: "fcai-cu",
@@ -543,6 +556,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     achievements: {
       title: "Achievements & Milestones",
       subtitle: "Key highlights demonstrating technical excellence, leadership, and project execution",
+      verifiedLabel: "Verified Milestone",
       items: [
         {
           id: "m1",
@@ -644,6 +658,10 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
         { label: "أبرز أطر العمل", value: "Next.js & Spark" },
         { label: "متدرب DEPI ومعتمد من Huawei", value: "معتمد دولياً" },
       ],
+      pills: {
+        engineering: { title: "هندسة البيانات", subtitle: "خطوط معالجة / سبارك / SQL" },
+        solutions: "تطبيقات Next.js وحلول BI",
+      },
     },
     about: {
       title: "نبذة عني",
@@ -665,6 +683,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     skills: {
       title: "المهارات التقنية",
       subtitle: "مجموعة شاملة من الأدوات والتقنيات في هندسة البيانات والتحليلات وتطوير البرمجيات",
+      allLabel: "جميع المهارات",
       categories: [
         {
           id: "data-engineering",
@@ -919,6 +938,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     education: {
       title: "التعليم والشهادات",
       subtitle: "خلفية أكاديمية متينة في علوم الحاسب واعتمادات مهنية معترف بها دولياً",
+      degreesTitle: "الدرجات والبرامج الأكاديمية",
       degrees: [
         {
           id: "fcai-cu",
@@ -988,6 +1008,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     achievements: {
       title: "الإنجازات والمحطات البارزة",
       subtitle: "أبرز المحطات التي تبرهن على الكفاءة التقنية والتفوق في تنفيذ المشروعات",
+      verifiedLabel: "إنجاز موثق ومؤكد",
       items: [
         {
           id: "m1",

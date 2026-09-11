@@ -12,7 +12,7 @@ export default function Projects() {
   const labels = projects.labels;
 
   return (
-    <section id="projects" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30">
+    <section id="projects" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30 scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -44,10 +44,10 @@ export default function Projects() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
                   {/* Project Image & Visual Preview */}
                   <div
-                    className={`lg:col-span-5 p-6 sm:p-8 flex flex-col justify-center items-center bg-gradient-to-br from-slate-100 to-indigo-50/40 dark:from-slate-850 dark:to-slate-900/80 border-b lg:border-b-0 ${
+                    className={`lg:col-span-5 p-6 sm:p-8 flex flex-col justify-center items-center bg-gradient-to-br from-slate-100 to-indigo-50/40 dark:from-slate-900/90 dark:to-slate-950/80 border-b lg:border-b-0 ${
                       isEven
-                        ? "lg:border-r rtl:lg:border-r-0 rtl:lg:border-l border-slate-200/80 dark:border-slate-700/60"
-                        : "lg:order-2 lg:border-l rtl:lg:border-l-0 rtl:lg:border-r border-slate-200/80 dark:border-slate-700/60"
+                        ? "ltr:lg:border-r rtl:lg:border-l border-slate-200/80 dark:border-slate-700/60"
+                        : "lg:order-2 ltr:lg:border-l rtl:lg:border-r border-slate-200/80 dark:border-slate-700/60"
                     }`}
                   >
                     <div className="relative w-full max-w-md aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 group bg-slate-900 flex items-center justify-center p-2">

@@ -50,9 +50,17 @@ export default function Contact() {
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
+  const handleInputChange = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (status !== "idle") {
+      setStatus("idle");
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.name.trim() || !formData.email.trim() || !emailRegex.test(formData.email.trim()) || !formData.message.trim()) {
       setStatus("error");
       return;
     }
@@ -61,11 +69,11 @@ export default function Contact() {
     setTimeout(() => {
       setStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 800);
+    }, 600);
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30">
+    <section id="contact" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30 scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -195,7 +203,7 @@ export default function Contact() {
                       required
                       placeholder={formLabels.namePlaceholder}
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) => handleInputChange("name", e.target.value)}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm transition-all"
                     />
                   </div>
@@ -209,7 +217,7 @@ export default function Contact() {
                       required
                       placeholder={formLabels.emailPlaceholder}
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) => handleInputChange("email", e.target.value)}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm transition-all"
                     />
                   </div>
@@ -223,7 +231,7 @@ export default function Contact() {
                     type="text"
                     placeholder={formLabels.subjectPlaceholder}
                     value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    onChange={(e) => handleInputChange("subject", e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm transition-all"
                   />
                 </div>
@@ -237,7 +245,7 @@ export default function Contact() {
                     required
                     placeholder={formLabels.messagePlaceholder}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) => handleInputChange("message", e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm transition-all resize-none"
                   />
                 </div>

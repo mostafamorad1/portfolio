@@ -29,7 +29,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "Segoe UI", "Tahoma", "Cairo", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
       },
     },

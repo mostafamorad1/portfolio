@@ -10,7 +10,7 @@ export default function Achievements() {
   const achievements = content.achievements;
 
   return (
-    <section id="achievements" className="py-20 md:py-28 relative">
+    <section id="achievements" className="py-20 md:py-28 relative scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -64,7 +64,7 @@ export default function Achievements() {
 
               <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                 <CheckCircle className="w-3.5 h-3.5" />
-                <span>Verified Milestone</span>
+                <span>{achievements.verifiedLabel}</span>
               </div>
             </motion.div>
           ))}

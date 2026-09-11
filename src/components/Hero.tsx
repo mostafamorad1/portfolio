@@ -14,14 +14,17 @@ export default function Hero() {
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (typeof window !== "undefined" && window.history) {
+        window.history.pushState(null, "", `#${id}`);
+      }
     }
   };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen pt-28 pb-16 md:pt-36 md:pb-24 flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen pt-28 pb-16 md:pt-36 md:pb-24 flex items-center justify-center overflow-hidden scroll-mt-20 md:scroll-mt-24"
     >
       {/* Background glowing gradients */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-indigo-500/15 to-cyan-500/20 dark:from-indigo-600/20 dark:to-cyan-400/15 rounded-full blur-3xl pointer-events-none -z-10" />
@@ -78,8 +81,12 @@ export default function Hero() {
                 <span>{hero.downloadCv}</span>
               </a>
 
-              <button
-                onClick={() => scrollTo("projects")}
+              <a
+                href="#projects"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo("projects");
+                }}
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-slate-800 dark:text-white font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
                 <span>{hero.viewWork}</span>
@@ -88,15 +95,19 @@ export default function Hero() {
                 ) : (
                   <ArrowRight className="w-4 h-4" />
                 )}
-              </button>
+              </a>
 
-              <button
-                onClick={() => scrollTo("contact")}
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo("contact");
+                }}
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-cyan-400 font-medium text-sm transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 <span>{hero.contactMe}</span>
-              </button>
+              </a>
             </div>
 
             {/* Key Quick Stats */}
@@ -147,10 +158,10 @@ export default function Hero() {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-slate-900 dark:text-white">
-                    Data Engineering
+                    {hero.pills.engineering.title}
                   </p>
                   <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                    ETL / Spark / SQL
+                    {hero.pills.engineering.subtitle}
                   </p>
                 </div>
               </motion.div>
@@ -163,7 +174,7 @@ export default function Hero() {
               >
                 <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping" />
                 <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
-                  Next.js & BI Solutions
+                  {hero.pills.solutions}
                 </span>
               </motion.div>
             </div>

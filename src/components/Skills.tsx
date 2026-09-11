@@ -23,7 +23,7 @@ export default function Skills() {
       : skillsData.categories.filter((cat) => cat.id === activeCategory);
 
   return (
-    <section id="skills" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30">
+    <section id="skills" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30 scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -49,7 +49,7 @@ export default function Skills() {
                 : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700"
             }`}
           >
-            {content.nav.skills} ({content.skills.categories.length})
+            {skillsData.allLabel} ({skillsData.categories.length})
           </button>
           {skillsData.categories.map((cat) => {
             const Icon = categoryIcons[cat.id] || Database;

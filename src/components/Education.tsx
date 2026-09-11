@@ -10,7 +10,7 @@ export default function Education() {
   const education = content.education;
 
   return (
-    <section id="education" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30">
+    <section id="education" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30 scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -31,7 +31,7 @@ export default function Education() {
           <div className="lg:col-span-6 space-y-6">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
               <GraduationCap className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
-              <span>{education.title}</span>
+              <span>{education.degreesTitle}</span>
             </h3>
 
             {education.degrees.map((deg, index) => (

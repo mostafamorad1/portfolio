@@ -6,11 +6,11 @@ import { useThemeLanguage } from "@/context/ThemeLanguageContext";
 import { Briefcase, ExternalLink, Calendar, MapPin, Award, Check } from "lucide-react";
 
 export default function Experience() {
-  const { content } = useThemeLanguage();
+  const { content, isRtl } = useThemeLanguage();
   const experience = content.experience;
 
   return (
-    <section id="experience" className="py-20 md:py-28 relative">
+    <section id="experience" className="py-20 md:py-28 relative scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -27,18 +27,18 @@ export default function Experience() {
         </div>
 
         {/* Timeline / Experience Cards */}
-        <div className="relative border-l-2 rtl:border-r-2 rtl:border-l-0 border-indigo-200 dark:border-slate-800 ml-4 rtl:ml-0 rtl:mr-4 md:ml-32 rtl:md:mr-32 space-y-12">
+        <div className="relative ltr:border-l-2 rtl:border-r-2 border-indigo-200 dark:border-slate-800 ltr:ml-4 rtl:mr-4 ltr:md:ml-32 rtl:md:mr-32 space-y-12">
           {experience.items.map((item, index) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative pl-6 rtl:pl-0 rtl:pr-6"
+              className="relative ltr:pl-6 rtl:pr-6"
             >
               {/* Timeline marker icon */}
-              <div className="absolute -left-[17px] rtl:-left-auto rtl:-right-[17px] top-1.5 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 border-4 border-white dark:border-slate-900">
+              <div className="absolute ltr:-left-[17px] rtl:-right-[17px] top-1.5 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 border-4 border-white dark:border-slate-900">
                 <Award className="w-3.5 h-3.5" />
               </div>
 

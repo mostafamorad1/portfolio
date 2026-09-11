@@ -17,7 +17,7 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="py-20 md:py-28 relative">
+    <section id="services" className="py-20 md:py-28 relative scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
