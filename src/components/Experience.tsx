@@ -70,7 +70,7 @@ export default function Experience() {
                   <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                     <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700/60">
                       <Calendar className="w-3.5 h-3.5" />
-                      <span>{item.period}</span>
+                      <bdi>{item.period}</bdi>
                     </span>
                     <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700/60">
                       <MapPin className="w-3.5 h-3.5" />

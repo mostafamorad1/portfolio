@@ -49,7 +49,7 @@ export default function Education() {
                   </span>
                   <span className="inline-flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{deg.period}</span>
+                    <bdi>{deg.period}</bdi>
                   </span>
                 </div>
 

@@ -21,6 +21,14 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  openGraph: {
+    title: "Mostafa Morad | Data Engineer & Software Developer",
+    description:
+      "Scalable data pipelines, Next.js web applications, and insightful BI analytics.",
+    type: "website",
+    locale: "en_US",
+    alternateLocale: ["ar_EG"],
+  },
 };
 
 export default function RootLayout({
@@ -37,7 +45,8 @@ export default function RootLayout({
               (function() {
                 try {
                   var savedTheme = localStorage.getItem('portfolio_theme');
-                  if (savedTheme === 'light') {
+                  var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                  if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
                     document.documentElement.classList.remove('dark');
                   } else {
                     document.documentElement.classList.add('dark');

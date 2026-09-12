@@ -50,13 +50,17 @@ export default function Projects() {
                         : "lg:order-2 ltr:lg:border-l rtl:lg:border-r border-slate-200/80 dark:border-slate-700/60"
                     }`}
                   >
-                    <div className="relative w-full max-w-md aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 group bg-slate-900 flex items-center justify-center p-2">
+                    <div className="relative w-full max-w-md aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 dark:border-slate-700/80 group bg-slate-100/90 dark:bg-slate-900 flex items-center justify-center">
                       <Image
                         src={project.image}
                         alt={project.title}
                         width={600}
                         height={380}
-                        className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500 rounded-xl"
+                        className={`${
+                          project.id === "gen-academy-web"
+                            ? "object-contain p-6 w-full h-full"
+                            : "object-cover object-top w-full h-full"
+                        } group-hover:scale-105 transition-transform duration-500 rounded-xl`}
                       />
                     </div>
 

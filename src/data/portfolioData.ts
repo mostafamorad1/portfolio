@@ -407,7 +407,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           tools: ["Python", "SQL", "REST APIs", "Automated Validation", "BI Reporting"],
           result:
             "Achieved 99.8% reconciliation accuracy across multi-site tanks, eliminating manual audit hours and alerting depot managers to leakage or unauthorized usage immediately.",
-          image: "/projects/chocolate-dashboard.png",
+          image: "/projects/fuel-management-dashboard.jpg",
         },
         {
           id: "n8n-automation",
@@ -421,7 +421,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           tools: ["n8n", "Node.js", "PostgreSQL", "Webhooks", "JSON", "Docker"],
           result:
             "Saved 5+ hours per week, completely eliminated manual data entry discrepancies, and established real-time automated status monitoring.",
-          image: "/projects/gen-academy-logo.png",
+          image: "/projects/n8n-workflow-automation.jpg",
         },
       ],
     },
@@ -859,7 +859,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           tools: ["بايثون", "SQL", "واجهات برمجة REST", "خوارزميات التحقق", "تقارير BI"],
           result:
             "تحقيق دقة مطابقة بلغت 99.8%، وإلغاء ساعات الجرد اليدوي بالكامل مع تمكين مديري المستودعات من كشف أي تسريب أو هدر لحظياً.",
-          image: "/projects/chocolate-dashboard.png",
+          image: "/projects/fuel-management-dashboard.jpg",
         },
         {
           id: "n8n-automation",
@@ -873,7 +873,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           tools: ["n8n", "Node.js", "PostgreSQL", "Webhooks", "Docker", "JSON"],
           result:
             "توفير أكثر من 5 ساعات أسبوعياً، والقضاء التام على أخطاء الإدخال البشري، مع ضمان تحديث السجلات بشكل لحظي وبأعلى موثوقية.",
-          image: "/projects/gen-academy-logo.png",
+          image: "/projects/n8n-workflow-automation.jpg",
         },
       ],
     },

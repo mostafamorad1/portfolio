@@ -103,7 +103,7 @@ export default function Skills() {
                           <span>{skill.name}</span>
                         </span>
                         <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                          {skill.level}%
+                          <bdi>{skill.level}%</bdi>
                         </span>
                       </div>
                       <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-700/50 overflow-hidden">
@@ -114,7 +114,7 @@ export default function Skills() {
                           transition={{ duration: 0.8, delay: sIdx * 0.05 }}
                           className={`h-full rounded-full ${
                             skill.highlight
-                              ? "bg-gradient-to-r from-indigo-500 to-cyan-400"
+                              ? "ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-indigo-500 to-cyan-400"
                               : "bg-indigo-400 dark:bg-indigo-500/70"
                           }`}
                         />

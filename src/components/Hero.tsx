@@ -15,9 +15,19 @@ export default function Hero() {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (typeof window !== "undefined" && window.history) {
-        window.history.pushState(null, "", `#${id}`);
+      if (typeof window !== "undefined" && window.history && window.history.pushState) {
+        window.history.pushState({ section: id }, "", `#${id}`);
       }
+    }
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault();
+      scrollTo(id);
     }
   };
 
@@ -75,7 +85,7 @@ export default function Hero() {
               <a
                 href={personalInfo.cvFile}
                 download="Mostafa_Morad_CV.pdf"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 transition-all hover:shadow-indigo-600/35 hover:-translate-y-0.5 active:translate-y-0"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 transition-all hover:shadow-indigo-600/35 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
                 <Download className="w-4 h-4" />
                 <span>{hero.downloadCv}</span>
@@ -83,11 +93,8 @@ export default function Hero() {
 
               <a
                 href="#projects"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo("projects");
-                }}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-slate-800 dark:text-white font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0"
+                onClick={(e) => handleNavClick(e, "projects")}
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-slate-800 dark:text-white font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
                 <span>{hero.viewWork}</span>
                 {isRtl ? (
@@ -99,11 +106,8 @@ export default function Hero() {
 
               <a
                 href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo("contact");
-                }}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-cyan-400 font-medium text-sm transition-colors"
+                onClick={(e) => handleNavClick(e, "contact")}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-cyan-400 font-medium text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
                 <Mail className="w-4 h-4" />
                 <span>{hero.contactMe}</span>

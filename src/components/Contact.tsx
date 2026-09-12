@@ -49,27 +49,49 @@ export default function Contact() {
   });
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (status !== "idle") {
       setStatus("idle");
+      setErrorMessage("");
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.name.trim() || !formData.email.trim() || !emailRegex.test(formData.email.trim()) || !formData.message.trim()) {
       setStatus("error");
+      setErrorMessage(
+        language === "ar"
+          ? "يرجى ملء جميع الحقول المطلوبة والتأكد من صحة البريد الإلكتروني."
+          : "Please complete all required fields with a valid email address."
+      );
       return;
     }
 
     setStatus("submitting");
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 600);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+        setErrorMessage(data.error || formLabels.errorMessage);
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage(formLabels.errorMessage);
+    }
   };
 
   return (
@@ -163,7 +185,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white hover:border-indigo-600 dark:hover:bg-indigo-600 dark:hover:border-indigo-600 transition-all shadow-sm"
+                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white hover:border-indigo-600 dark:hover:bg-indigo-600 dark:hover:border-indigo-600 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                 >
                   <LinkedInIcon className="w-5 h-5" />
                 </a>
@@ -172,7 +194,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-900 hover:text-white hover:border-slate-900 dark:hover:bg-cyan-500 dark:hover:text-slate-950 dark:hover:border-cyan-500 transition-all shadow-sm"
+                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-900 hover:text-white hover:border-slate-900 dark:hover:bg-cyan-500 dark:hover:text-slate-950 dark:hover:border-cyan-500 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                 >
                   <GitHubIcon className="w-5 h-5" />
                 </a>
@@ -181,7 +203,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
-                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all shadow-sm"
+                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                 >
                   <MessageSquare className="w-5 h-5" />
                 </a>
@@ -262,20 +284,36 @@ export default function Contact() {
                 )}
 
                 {status === "error" && (
-                  <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 text-xs font-semibold flex items-center gap-2 border border-red-200 dark:border-red-800">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>{formLabels.errorMessage}</span>
+                  <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 text-xs font-semibold flex items-center justify-between gap-2 border border-red-200 dark:border-red-800">
+                    <div className="flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{errorMessage || formLabels.errorMessage}</span>
+                    </div>
                   </div>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-600/25 transition-all hover:shadow-indigo-600/40 disabled:opacity-50"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>{status === "submitting" ? formLabels.sendingButton : formLabels.sendButton}</span>
-                </button>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-600/25 transition-all hover:shadow-indigo-600/40 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>{status === "submitting" ? formLabels.sendingButton : formLabels.sendButton}</span>
+                  </button>
+
+                  <a
+                    href={`mailto:${personalInfo.email}?subject=${encodeURIComponent(
+                      formData.subject || "Portfolio Inquiry"
+                    )}&body=${encodeURIComponent(
+                      `Hi Mostafa,\n\nName: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+                    )}`}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold text-xs sm:text-sm shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                  >
+                    <Mail className="w-4 h-4 text-indigo-500 dark:text-cyan-400" />
+                    <span>{language === "ar" ? "إرسال عبر تطبيق البريد مباشرة" : "Send via Email Client"}</span>
+                  </a>
+                </div>
               </form>
             </div>
           </div>

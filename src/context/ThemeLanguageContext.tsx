@@ -31,17 +31,12 @@ export function ThemeLanguageProvider({ children }: { children: React.ReactNode 
       }
 
       const savedTheme = localStorage.getItem("portfolio_theme") as "light" | "dark" | null;
-      if (savedTheme === "light" || savedTheme === "dark") {
-        setThemeState(savedTheme);
-        if (savedTheme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      if (savedTheme === "light" || (!savedTheme && prefersLight)) {
         setThemeState("light");
         document.documentElement.classList.remove("dark");
       } else {
+        setThemeState("dark");
         document.documentElement.classList.add("dark");
       }
     } catch {

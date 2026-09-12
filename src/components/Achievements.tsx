@@ -44,7 +44,7 @@ export default function Achievements() {
                   </div>
                   {item.metric && (
                     <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 dark:bg-slate-700 text-indigo-700 dark:text-cyan-300 border border-indigo-200/50 dark:border-slate-600">
-                      {item.metric}
+                      <bdi>{item.metric}</bdi>
                     </span>
                   )}
                 </div>
