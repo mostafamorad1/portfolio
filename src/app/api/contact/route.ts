@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const runtime = "edge";
+
 // In-memory rate limiting: max 5 requests per 60 seconds per IP
 const rateLimitMap = new Map<string, number[]>();
 
