@@ -1,164 +1,171 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useThemeLanguage } from "@/context/ThemeLanguageContext";
-import { FolderGit2, AlertCircle, UserCheck, Cpu, Trophy, ArrowUpRight } from "lucide-react";
+import { FolderGit2, Cpu, ArrowUpRight, ChevronDown, ChevronUp, User2, Target, TrendingUp } from "lucide-react";
 
 export default function Projects() {
   const { content } = useThemeLanguage();
   const projects = content.projects;
   const labels = projects.labels;
+  const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
 
+  const toggleExpand = (id: string) => {
+    setExpandedIds((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
   return (
-    <section id="projects" className="py-20 md:py-28 relative bg-slate-50/50 dark:bg-slate-900/30 scroll-mt-20 md:scroll-mt-24">
+    <section id="projects" className="py-20 md:py-28 relative bg-transparent scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-cyan-300 border border-indigo-200/50 dark:border-indigo-800/50 mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-yellow-400 border border-yellow-400/30 mb-3">
             <FolderGit2 className="w-3.5 h-3.5" />
             <span>{projects.title}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             {projects.title}
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-600 dark:text-slate-400">
+          <p className="mt-3 text-base sm:text-lg text-slate-400">
             {projects.subtitle}
           </p>
         </div>
 
-        {/* Projects List */}
-        <div className="space-y-16">
-          {projects.items.map((project, index) => {
-            const isEven = index % 2 === 0;
+        {/* Bento Box Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {projects.items.slice(0, 3).map((project, index) => {
+            const isLarge = index === 0;
+            const isExpanded = !!expandedIds[project.id];
+
             return (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="rounded-3xl bg-white dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/60 shadow-md overflow-hidden hover:shadow-xl transition-all"
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className={`rounded-3xl bg-slate-900 border border-slate-800 shadow-md overflow-hidden hover:shadow-xl transition-all flex flex-col ${
+                  isLarge ? "lg:col-span-2" : "lg:col-span-1"
+                }`}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                  {/* Project Image & Visual Preview */}
-                  <div
-                    className={`lg:col-span-5 p-6 sm:p-8 flex flex-col justify-center items-center bg-gradient-to-br from-slate-100 to-indigo-50/40 dark:from-slate-900/90 dark:to-slate-950/80 border-b lg:border-b-0 ${
-                      isEven
-                        ? "ltr:lg:border-r rtl:lg:border-l border-slate-200/80 dark:border-slate-700/60"
-                        : "lg:order-2 ltr:lg:border-l rtl:lg:border-r border-slate-200/80 dark:border-slate-700/60"
-                    }`}
-                  >
-                    <div className="relative w-full max-w-md aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 dark:border-slate-700/80 group bg-slate-100/90 dark:bg-slate-900 flex items-center justify-center">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        width={600}
-                        height={380}
-                        className={`${
-                          project.id === "gen-academy-web"
-                            ? "object-contain p-6 w-full h-full"
-                            : "object-cover object-top w-full h-full"
-                        } group-hover:scale-105 transition-transform duration-500 rounded-xl`}
-                      />
+                {/* Image Section */}
+                <div className={`relative w-full ${isLarge ? "h-64 sm:h-80 lg:h-96" : "h-48 sm:h-56"} bg-slate-800 flex items-center justify-center overflow-hidden group`}>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes={isLarge ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 1024px) 100vw, 33vw"}
+                    className={`${
+                      project.id === "gen-academy-web" ? "object-contain p-2 sm:p-4" : "object-cover object-top"
+                    } w-full h-full group-hover:scale-105 transition-transform duration-500`}
+                  />
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit: ${project.title}`}
+                      className="absolute top-4 right-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/80 text-white backdrop-blur-sm border border-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-colors z-10"
+                    >
+                      <ArrowUpRight className="w-5 h-5" />
+                    </a>
+                  )}
+                </div>
+
+                {/* Content Section */}
+                <div className="p-6 sm:p-8 flex flex-col flex-grow gap-4">
+                  <div>
+                    {/* Role Badge */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <User2 className="w-3.5 h-3.5 text-cyan-400" />
+                      <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">{project.role}</span>
                     </div>
 
-                    {project.link && (
-                      <div className="mt-6 w-full flex justify-center">
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/20 transition-all hover:scale-105"
-                        >
-                          <span>{labels.visitProject}</span>
-                          <ArrowUpRight className="w-4 h-4" />
-                        </a>
-                      </div>
-                    )}
-                  </div>
+                    <h3 className={`font-bold text-white mb-2 ${isLarge ? "text-2xl sm:text-3xl" : "text-xl"}`}>
+                      {project.title}
+                    </h3>
+                    <p className="text-sm font-medium text-yellow-400 mb-4">
+                      {project.tagline}
+                    </p>
 
-                  {/* Project Details (Problem, Role, Solution, Tools, Result) */}
-                  <div
-                    className={`lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between ${
-                      isEven ? "" : "lg:order-1"
-                    }`}
-                  >
-                    <div>
-                      {/* Title & Tagline */}
-                      <div className="mb-6">
-                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
-                          {project.title}
-                        </h3>
-                        <p className="text-sm font-medium text-indigo-600 dark:text-cyan-400 mt-1">
-                          {project.tagline}
+                    <div className="space-y-3 mb-4">
+                      <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                        <div className="flex items-center gap-2 text-xs font-bold text-slate-300 mb-1">
+                          <Cpu className="w-3.5 h-3.5 text-yellow-400" />
+                          <span>{labels.solution}</span>
+                        </div>
+                        <p className={`text-sm text-slate-400 ${isExpanded ? "" : "line-clamp-3"}`}>
+                          {project.solution}
                         </p>
                       </div>
-
-                      {/* Structured 5 Items */}
-                      <div className="space-y-4">
-                        {/* 1. Problem */}
-                        <div className="p-3.5 rounded-xl bg-red-50/50 dark:bg-red-950/20 border border-red-200/50 dark:border-red-900/40">
-                          <div className="flex items-center gap-2 text-xs font-bold text-red-600 dark:text-red-400 mb-1">
-                            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                            <span>{labels.problem}</span>
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                            {project.problem}
-                          </p>
-                        </div>
-
-                        {/* 2. Role */}
-                        <div className="p-3.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-900/40">
-                          <div className="flex items-center gap-2 text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">
-                            <UserCheck className="w-3.5 h-3.5 shrink-0" />
-                            <span>{labels.role}</span>
-                          </div>
-                          <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">
-                            {project.role}
-                          </p>
-                        </div>
-
-                        {/* 3. Solution */}
-                        <div className="p-3.5 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/50 dark:border-indigo-900/40">
-                          <div className="flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1">
-                            <Cpu className="w-3.5 h-3.5 shrink-0" />
-                            <span>{labels.solution}</span>
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                            {project.solution}
-                          </p>
-                        </div>
-
-                        {/* 4. Result */}
-                        <div className="p-3.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/25 border border-emerald-200/60 dark:border-emerald-900/40">
-                          <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 mb-1">
-                            <Trophy className="w-3.5 h-3.5 shrink-0" />
-                            <span>{labels.result}</span>
-                          </div>
-                          <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 leading-relaxed">
-                            {project.result}
-                          </p>
-                        </div>
-                      </div>
                     </div>
 
-                    {/* 5. Tools */}
-                    <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/60">
-                      <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-2">
-                        {labels.tools}
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tools.map((tool, tIdx) => (
-                          <span
-                            key={tIdx}
-                            className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200"
-                          >
-                            {tool}
-                          </span>
-                        ))}
-                      </div>
+                    {/* Expandable Details */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-3 mb-4">
+                            {/* Problem */}
+                            <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                              <div className="flex items-center gap-2 text-xs font-bold text-slate-300 mb-1">
+                                <Target className="w-3.5 h-3.5 text-red-400" />
+                                <span>{labels.problem}</span>
+                              </div>
+                              <p className="text-sm text-slate-400">
+                                {project.problem}
+                              </p>
+                            </div>
+
+                            {/* Result */}
+                            <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                              <div className="flex items-center gap-2 text-xs font-bold text-slate-300 mb-1">
+                                <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                                <span>{labels.result}</span>
+                              </div>
+                              <p className="text-sm text-slate-400">
+                                {project.result}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* View Details Button */}
+                    <button
+                      onClick={() => toggleExpand(project.id)}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors mt-1 cursor-pointer"
+                    >
+                      <span>{isExpanded ? "Show Less" : "View Full Details"}</span>
+                      {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+
+                  <div className="border-t border-slate-800 pt-4 mt-auto">
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tools.slice(0, isLarge ? 8 : 6).map((tool, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                      {project.tools.length > (isLarge ? 8 : 6) && (
+                        <span className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                          +{project.tools.length - (isLarge ? 8 : 6)}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>

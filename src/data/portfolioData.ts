@@ -33,6 +33,7 @@ export interface EducationItem {
   period: string;
   description: string;
   badge: string;
+  logo?: string;
 }
 
 export interface CertificateItem {
@@ -41,6 +42,7 @@ export interface CertificateItem {
   issuer: string;
   date: string;
   credentialId?: string;
+  iconImage?: string;
 }
 
 export interface ServiceItem {
@@ -57,6 +59,7 @@ export interface MilestoneItem {
   category: string;
   description: string;
   metric?: string;
+  iconImage?: string;
 }
 
 export interface PortfolioContent {
@@ -73,6 +76,7 @@ export interface PortfolioContent {
   };
   hero: {
     greeting: string;
+    headline: string;
     name: string;
     role: string;
     usp: string;
@@ -80,6 +84,7 @@ export interface PortfolioContent {
     viewWork: string;
     contactMe: string;
     badgeText: string;
+    techStack: string;
     stats: { label: string; value: string }[];
     pills: {
       engineering: { title: string; subtitle: string };
@@ -92,12 +97,12 @@ export interface PortfolioContent {
     hookTitle: string;
     hookText: string;
     expertiseTitle: string;
-    expertiseText: string;
+    expertiseList: { category: string; skills: string[] }[];
     uspTitle: string;
     uspText: string;
+    uspPoints: string[];
     experienceTitle: string;
-    experienceText: string;
-    techStackTitle: string;
+    experienceTimeline: { entity: string; role: string; desc: string }[];
   };
   skills: {
     title: string;
@@ -193,13 +198,15 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     hero: {
       greeting: "Hello, I am",
+      headline: "I build data systems that keep working when the internet doesn't.",
       name: "Mostafa Morad Sayed",
       role: "Data Engineer & Software Developer",
-      usp: "I help organizations optimize their operational performance through scalable data pipelines, Next.js web applications, and insightful BI analytics.",
-      downloadCv: "Download CV",
-      viewWork: "View Projects",
+      usp: "I build scalable data pipelines, high-performance web applications, and BI solutions that turn raw data into reliable business insights.",
+      downloadCv: "Download CV ↓",
+      viewWork: "View My Projects →",
       contactMe: "Get in Touch",
       badgeText: "Available for Projects & Engineering Roles",
+      techStack: "Python · SQL · PostgreSQL · Next.js · ETL/ELT · Power BI",
       stats: [
         { label: "Pipeline Reliability", value: "99.8%" },
         { label: "Data Architecture & BI", value: "End-to-End" },
@@ -216,17 +223,23 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       subtitle: "Bridging the gap between raw data chaos and production-ready applications",
       hookTitle: "Who I Am",
       hookText:
-        "I am a results-oriented Data Engineer and Technical Solutions Specialist dedicated to designing resilient data architectures, high-throughput ETL/ELT pipelines, and modern web applications that empower data-driven decisions.",
+        "I’m a results-driven Data Engineer focused on building scalable data systems, high-performance ETL/ELT pipelines, and modern web applications that turn complex data into actionable insights.",
       expertiseTitle: "Core Expertise",
-      expertiseText:
-        "Specialized in turning fragmented, raw data into clean, structured assets. My domain spans scalable data warehousing, SQL query optimization, robust database modeling (Relational & NoSQL), and high-performance full-stack web applications with Next.js.",
+      expertiseList: [
+        { category: "Data Engineering", skills: ["ETL / ELT", "Data Warehousing", "SQL & Query Optimization", "Database Design"] },
+        { category: "Development", skills: ["Next.js", "Full-Stack Development", "REST APIs"] },
+        { category: "Data & BI", skills: ["Data Analytics", "Business Intelligence", "Data Pipelines"] }
+      ],
       uspTitle: "Unique Selling Proposition",
       uspText:
-        "I help organizations optimize their operational performance through scalable data pipelines, Next.js web applications, and insightful BI analytics — ensuring high throughput, zero-downtime data pipelines, and optimized query performance for analytics, reporting, and AI workflows.",
+        "I bridge Data Engineering and Web Development to build scalable systems that transform raw data into reliable, actionable solutions.",
+      uspPoints: ["Scalable Architecture", "High-Performance Pipelines", "Data-Driven Applications"],
       experienceTitle: "Professional Background",
-      experienceText:
-        "With rigorous training in the Digital Egypt Pioneers Initiative (DEPI) Data Engineering track, hands-on production web development at GEN Academy, and freelance data workflow engineering on Mindrift and OpenTrain AI, I deliver production-ready software and data platforms built for scale.",
-      techStackTitle: "Primary Technologies",
+      experienceTimeline: [
+        { entity: "DEPI — Data Engineering", role: "Training & Professional Development", desc: "" },
+        { entity: "GEN Academy — Web Development", role: "Hands-on Production Projects", desc: "" },
+        { entity: "Mindrift / OpenTrain AI — Freelance", role: "Data Workflow Engineering", desc: "" }
+      ]
     },
     skills: {
       title: "Technical Skills",
@@ -327,14 +340,14 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           id: "mindrift",
           role: "Data & Technical Solutions Specialist",
           company: "Mindrift / Freelance",
-          period: "2023 – Present",
+          period: "2025 - Present",
           location: "Remote",
           description:
             "Delivered freelance data processing workflows, analytical pipelines, and database optimization consultancies for international clients.",
           achievements: [
             "Automated operational data extraction and validation reducing manual data entry by 80%.",
-            "Built custom business intelligence dashboards visualizing real-time financial and operational metrics.",
-            "Maintained 100% on-time milestone delivery and positive client satisfaction reviews.",
+            "Built custom interactive BI dashboards to visualize key performance metrics for stakeholders.",
+            "Integrated cross-platform APIs using n8n for real-time synchronization between CRM and data storage.",
           ],
           skills: ["Python", "SQL", "Power BI", "n8n", "Data Quality"],
         },
@@ -342,7 +355,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           id: "opentrain",
           role: "AI Data Contributor & Dataset Evaluator",
           company: "OpenTrain AI",
-          period: "2023 – 2024",
+          period: "2025 - Present",
           location: "Remote",
           description:
             "Contributed to specialized AI training datasets, performing high-fidelity data structuring and technical verification.",
@@ -367,27 +380,12 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       },
       items: [
         {
-          id: "gen-academy-web",
-          title: "GEN Academy Educational Web Platform",
-          tagline: "Scalable Next.js web application for modern learning and course management",
-          problem:
-            "GEN Academy needed an integrated, lightning-fast digital platform to showcase curriculum, manage student enrollments, and provide seamless access to educational resources without performance bottlenecks.",
-          role: "Full-Stack Web Developer & Technical Solutions Specialist",
-          solution:
-            "Architected and deployed a single-page, responsive web platform utilizing Next.js, TypeScript, and Tailwind CSS. Implemented clean component hierarchies, dynamic routing, fast asset loading, and frictionless user flows.",
-          tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "REST APIs"],
-          result:
-            "Successfully deployed live at gen-academy.org, boosting enrollment conversions, decreasing page load times by 40%, and elevating institutional digital presence.",
-          image: "/projects/gen-academy-logo.png",
-          link: "https://gen-academy.org",
-        },
-        {
           id: "chocolate-dashboard",
           title: "Chocolate Sales & Operational BI Dashboard",
           tagline: "Interactive Power BI analytics uncovering revenue trends, product margins, and regional distribution",
           problem:
             "A multi-regional confectionery retail company suffered from siloed sales logs, sluggish reporting turnaround, and inability to pinpoint underperforming product categories or delayed shipment channels.",
-          role: "BI Developer & Data Analyst",
+          role: "BI Developer & Data Analyst (Team Project)",
           solution:
             "Engineered an automated data extraction and transformation pipeline loading clean transactional data into Power BI. Formulated advanced DAX measures, dynamic KPI summary cards, time-series forecasting, and geographical shipment heatmaps.",
           tools: ["Power BI", "DAX", "Advanced SQL", "Excel", "Data Modeling", "ETL"],
@@ -396,32 +394,19 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           image: "/projects/chocolate-dashboard.png",
         },
         {
-          id: "fuel-management",
-          title: "K92 Industrial Fuel Management Dashboard",
-          tagline: "Real-time automated reconciliation, variance detection, and consumption tracking system",
+          id: "gen-academy-web",
+          title: "GEN Academy Educational Web Platform",
+          tagline: "Co-Founded & built a scalable Next.js platform for modern learning and course management",
           problem:
-            "Heavy industrial operations faced costly fuel shrinkage and discrepancies between electronic dispensing logs (MFN / SmartFill) and physical storage tank dip readings.",
-          role: "Data & Systems Integration Engineer",
+            "GEN Academy needed an integrated, lightning-fast digital platform to showcase curriculum, manage student enrollments, and provide seamless access to educational resources without performance bottlenecks.",
+          role: "Co-Founder & Full-Stack Web Developer",
           solution:
-            "Constructed automated reconciliation algorithms validating opening balances, fuel deliveries, dispensing events, and closing readings. Created automated exception alerts identifying variance thresholds instantaneously.",
-          tools: ["Python", "SQL", "REST APIs", "Automated Validation", "BI Reporting"],
+            "Co-founded GEN Academy and single-handedly architected, designed, and deployed the entire production web platform from scratch using Next.js, TypeScript, and Tailwind CSS. Built responsive UI components, dynamic routing, SEO optimization, fast asset loading, and frictionless enrollment user flows. Managed the full software lifecycle from requirements gathering to production deployment and ongoing maintenance.",
+          tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "REST APIs"],
           result:
-            "Achieved 99.8% reconciliation accuracy across multi-site tanks, eliminating manual audit hours and alerting depot managers to leakage or unauthorized usage immediately.",
-          image: "/projects/fuel-management-dashboard.jpg",
-        },
-        {
-          id: "n8n-automation",
-          title: "Intelligent Workflow Automation Engine",
-          tagline: "Automated event-driven orchestration connecting webhooks, databases, and alerting channels",
-          problem:
-            "Repetitive manual data entry across disparate tools, student activity tracking, and status reports consumed over 5 productive hours every week.",
-          role: "Automation & Backend Engineer",
-          solution:
-            "Designed and implemented automated workflows utilizing n8n and Node.js microservices. Integrated PostgreSQL triggers, external webhooks, and automated notifications to sync logs and project metrics automatically.",
-          tools: ["n8n", "Node.js", "PostgreSQL", "Webhooks", "JSON", "Docker"],
-          result:
-            "Saved 5+ hours per week, completely eliminated manual data entry discrepancies, and established real-time automated status monitoring.",
-          image: "/projects/n8n-workflow-automation.jpg",
+            "Successfully deployed live at gen-academy.org, boosting enrollment conversions, decreasing page load times by 40%, and elevating institutional digital presence. Platform serves hundreds of students with high reliability.",
+          image: "/assets/gen-logo-only.png",
+          link: "https://gen-academy.org",
         },
       ],
     },
@@ -492,19 +477,21 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           id: "fcai-cu",
           institution: "Faculty of Computers and Artificial Intelligence, Cairo University (FCAI-CU)",
           degree: "Bachelor of Science in Computer Science",
-          period: "2021 – Present",
+          period: "2024",
           description:
             "Rigorous coursework in Data Structures, Algorithms, Database Systems, Operating Systems, Software Engineering, and Distributed Computing.",
           badge: "FCAI-CU",
+          logo: "/assets/fcai-logo.png",
         },
         {
           id: "depi-program",
           institution: "Digital Egypt Pioneers Initiative (DEPI) — MCIT Egypt",
           degree: "Data Engineering Professional Specialization",
-          period: "2024 – Present",
+          period: "2026 – Present",
           description:
             "Government-sponsored elite technical training focusing on enterprise Big Data pipelines, Cloud Data Warehousing, SQL query optimization, and production pipeline deployment.",
           badge: "DEPI Fellow",
+          logo: "/assets/depi-logo.png",
         },
       ],
       certificatesTitle: "Industry Accreditations & Credentials",
@@ -515,6 +502,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "Huawei ICT Academy",
           date: "Certified",
           credentialId: "HCIA-BD-EG",
+          iconImage: "/assets/huawei-ict-logo.png",
         },
         {
           id: "hcia-security",
@@ -522,6 +510,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "Huawei ICT Academy",
           date: "Certified",
           credentialId: "HCIA-SEC-EG",
+          iconImage: "/assets/huawei-ict-logo.png",
         },
         {
           id: "hcib-security",
@@ -529,6 +518,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "Huawei ICT Academy",
           date: "Certified",
           credentialId: "HCIB-SEC",
+          iconImage: "/assets/huawei-ict-logo.png",
         },
         {
           id: "gci-world",
@@ -536,6 +526,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "GCI World",
           date: "Accredited",
           credentialId: "GCI-TECH",
+          iconImage: "/assets/gci-logo.png",
         },
         {
           id: "itida-gigs",
@@ -543,6 +534,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "Information Technology Industry Development Agency (ITIDA)",
           date: "Completed",
           credentialId: "ITIDA-GIGS",
+          iconImage: "/assets/itida-gigs-logo.png",
         },
         {
           id: "mahara-tech",
@@ -550,6 +542,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "Information Technology Institute (ITI)",
           date: "Completed",
           credentialId: "ITI-MT",
+          iconImage: "/assets/mahara-tech-logo.png",
         },
       ],
     },
@@ -560,11 +553,11 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       items: [
         {
           id: "m1",
-          title: "Top-Tier DEPI Data Engineering Performance",
+          title: "DEPI Data Engineering Performance",
           category: "Academic & Professional Training",
           description:
             "Recognized for top performance in scalable pipeline implementation, database design reviews, and automated data transformations within the DEPI initiative.",
-          metric: "Top Cohort Rank",
+          iconImage: "/assets/depi-logo.png",
         },
         {
           id: "m2",
@@ -573,6 +566,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           description:
             "Successfully cleared HCIA-Big Data, HCIA-Security, and HCIB-Security professional exams, proving proficiency in enterprise networks and data ecosystems.",
           metric: "3x Certifications",
+          iconImage: "/assets/huawei-logo.png",
         },
         {
           id: "m3",
@@ -581,22 +575,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           description:
             "Engineered and deployed the production web application for gen-academy.org, facilitating seamless student access and course enrollments.",
           metric: "Live Production App",
-        },
-        {
-          id: "m4",
-          title: "High-Score Technical Pitch & Brand Evaluation",
-          category: "Communication & Strategy",
-          description:
-            "Achieved 9.5/10 Authenticity and a perfect 10/10 Value score under the rigorous A-C-E-V executive pitch assessment framework.",
-          metric: "10/10 Value Rating",
-        },
-        {
-          id: "m5",
-          title: "99.8% Automated Pipeline Reconciliation",
-          category: "Engineering Impact",
-          description:
-            "Developed industrial fuel reconciliation algorithm eliminating manual spreadsheet audits and catching tank discrepancies instantly.",
-          metric: "99.8% Accuracy",
+          iconImage: "/assets/gen-logo-only.png",
         },
       ],
     },
@@ -627,7 +606,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     footer: {
       rights: "All rights reserved.",
-      designedWith: "Built with Next.js, Tailwind CSS & Framer Motion.",
+      designedWith: "Mostafa Morad Portfolio",
       backToTop: "Back to Top",
     },
   },
@@ -645,13 +624,15 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     hero: {
       greeting: "مرحباً، أنا",
+      headline: "أبني أنظمة بيانات تستمر في العمل حتى عندما يتوقف الإنترنت.",
       name: "مصطفى مراد سيد",
       role: "مهندس بيانات ومطور برمجيات",
-      usp: "أساعد المؤسسات على تحسين أدائها التشغيلي من خلال تطوير تطبيقات ويب سريعة وتحليلات بيانات دقيقة.",
-      downloadCv: "تحميل السيرة الذاتية",
-      viewWork: "استعراض الأعمال",
+      usp: "أبني خطوط بيانات قابلة للتوسع، تطبيقات ويب عالية الأداء، وحلول ذكاء أعمال تحول البيانات المعقدة إلى رؤى يمكن الاعتماد عليها.",
+      downloadCv: "تحميل السيرة الذاتية ↓",
+      viewWork: "استعراض مشاريعي ←",
       contactMe: "تواصل معي الآن",
       badgeText: "متاح للمشاريع والفرص الهندسية",
+      techStack: "Python · SQL · PostgreSQL · Next.js · ETL/ELT · Power BI",
       stats: [
         { label: "دقة خطوط البيانات", value: "99.8%" },
         { label: "معمارية البيانات و BI", value: "شاملة" },
@@ -668,17 +649,23 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       subtitle: "جسر يربط بين البيانات الأولية المعقدة والحلول والتطبيقات الإنتاجية الفعالة",
       hookTitle: "من أنا",
       hookText:
-        "أنا مهندس بيانات ومختص حلول تقنية أسعى لتمكين المؤسسات من تحويل البيانات الخام المشتتة إلى بنى تحتية موثوقة وعالية الأداء تدعم اتخاذ القرارات الذكية وتطبيقات الذكاء الاصطناعي.",
+        "مهندس بيانات يركز على بناء أنظمة بيانات قابلة للتوسع، وخطوط معالجة عالية الأداء (ETL/ELT)، وتطبيقات ويب حديثة تحول البيانات المعقدة إلى رؤى قابلة للتنفيذ.",
       expertiseTitle: "الخبرات الأساسية",
-      expertiseText:
-        "متخصص في بناء وتصميم خطوط معالجة البيانات ETL/ELT، ونمذجة قواعد البيانات العلائقية وغير العلائقية، وتحسين أداء استعلامات SQL، بالإضافة إلى بناء تطبيقات الويب الحديثة والمتجاوبة باستخدام Next.js و React.",
+      expertiseList: [
+        { category: "هندسة البيانات", skills: ["ETL / ELT", "مستودعات البيانات", "SQL وتحسين الأداء", "تصميم قواعد البيانات"] },
+        { category: "تطوير البرمجيات", skills: ["Next.js", "تطوير ويب متكامل", "واجهات REST APIs"] },
+        { category: "البيانات و BI", skills: ["تحليل البيانات", "ذكاء الأعمال", "خطوط معالجة البيانات"] }
+      ],
       uspTitle: "القيمة المضافة (USP)",
       uspText:
-        "أساعد المؤسسات على تحسين أدائها التشغيلي من خلال تطوير تطبيقات ويب سريعة وتحليلات بيانات دقيقة، مع ضمان تدفق مستمر للبيانات دون توقف وتجهيزها لأنظمة التحليل الذكي.",
+        "أدمج بين هندسة البيانات وتطوير الويب لبناء أنظمة قابلة للتوسع تحول البيانات الخام إلى حلول موثوقة.",
+      uspPoints: ["هيكلة قابلة للتوسع", "خطوط بيانات عالية الأداء", "تطبيقات مدفوعة بالبيانات"],
       experienceTitle: "الخلفية المهنية",
-      experienceText:
-        "أمتلك خلفية عملية متميزة تشمل التدريب المتخصص في مبادرة رواد مصر الرقمية (DEPI) في هندسة البيانات، والعمل الفعلي في تطوير منصة GEN Academy، بالإضافة لتقديم استشارات وحلول أتمتة البيانات عبر منصات العمل الحر العالمية مثل Mindrift و OpenTrain AI.",
-      techStackTitle: "التقنيات الرئيسية",
+      experienceTimeline: [
+        { entity: "DEPI — هندسة البيانات", role: "تدريب مهني وتطوير احترافي", desc: "" },
+        { entity: "GEN Academy — تطوير الويب", role: "مشاريع إنتاجية فعلية", desc: "" },
+        { entity: "Mindrift / OpenTrain AI — عمل حر", role: "هندسة أتمتة وتدفق البيانات", desc: "" }
+      ]
     },
     skills: {
       title: "المهارات التقنية",
@@ -779,7 +766,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           id: "mindrift",
           role: "مختص حلول بيانات وعمل حر",
           company: "منصة Mindrift / عمل حر",
-          period: "2023 – حتى الآن",
+          period: "2025 – حتى الآن",
           location: "عن بُعد",
           description:
             "تنفيذ مشاريع مستقلة في هندسة البيانات وبناء لوحات التحكم التحليلية وأتمتة المهام لعملاء من مختلف الدول.",
@@ -794,7 +781,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           id: "opentrain",
           role: "مساهم ومراجع بيانات الذكاء الاصطناعي",
           company: "OpenTrain AI",
-          period: "2023 – 2024",
+          period: "2025 – حتى الآن",
           location: "عن بُعد",
           description:
             "المساهمة في تنقيح وهيكلة مجموعات البيانات التقنية لتدريب نماذج الذكاء الاصطناعي.",
@@ -819,27 +806,12 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       },
       items: [
         {
-          id: "gen-academy-web",
-          title: "منصة أكاديمية جين التعليمية (GEN Academy)",
-          tagline: "تطبيق ويب متقدم ومبني بواسطة Next.js لإدارة التعليم والمساقات الحديثة",
-          problem:
-            "كانت الأكاديمية بحاجة إلى منصة ويب رقمية تفاعلية وسريعة جداً لعرض البرامج التدريبية وإتاحة تسجيل الطلاب دون أي بطء أو تعقيدات في واجهة الاستخدام.",
-          role: "مطور ويب متكامل ومختص حلول تقنية",
-          solution:
-            "هندسة وتطوير تطبيق ويب أحادي الصفحة بتصميم عصري ومتجاوب باستخدام Next.js و TypeScript و Tailwind CSS مع هيكلة واضحة ومسارات تفاعلية وسرعة استجابة استثنائية.",
-          tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "واجهات REST"],
-          result:
-            "إطلاق المنصة الحية رسمياً على gen-academy.org، وزيادة معدل التحويل للتسجيل، وتقليل وقت تحميل الصفحات بنسبة 40% مع إشادة واسعة بتجربة الاستخدام.",
-          image: "/projects/gen-academy-logo.png",
-          link: "https://gen-academy.org",
-        },
-        {
           id: "chocolate-dashboard",
           title: "لوحة تحليلات مبيعات الشوكولاتة وذكاء الأعمال",
           tagline: "لوحة تحكم تفاعلية عبر Power BI تكشف اتجاهات الإيرادات وهوامش الربح والتوزيع الجغرافي",
           problem:
             "واجهت إحدى شركات تجارة الحلويات متعددة الفروع مشكلة تشتت بيانات المبيعات وبطء إصدار التقارير وصعوبة تحديد المنتجات الأكثر ربحية أو مسارات الشحن المتأخرة.",
-          role: "مطور ذكاء أعمال ومحلل بيانات",
+          role: "مطور ذكاء أعمال ومحلل بيانات (مشروع فريق عمل)",
           solution:
             "بناء خط استخراج وتحويل بيانات مؤتمت بالكامل، وتغذية نموذج بيانات احترافي في Power BI مع صياغة معادلات DAX متقدمة، وبطاقات مؤشرات أداء حية، وخرائط توزيع جغرافية.",
           tools: ["Power BI", "DAX", "SQL متقدم", "Excel", "نمذجة البيانات", "ETL"],
@@ -848,32 +820,19 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           image: "/projects/chocolate-dashboard.png",
         },
         {
-          id: "fuel-management",
-          title: "لوحة إدارة الوقود والمطابقة التلقائية K92",
-          tagline: "نظام كشف الفروقات والمطابقة اللحظية بين أنظمة القياس وخزانات الوقود الصناعية",
+          id: "gen-academy-web",
+          title: "منصة أكاديمية جين التعليمية (GEN Academy)",
+          tagline: "شريك مؤسس ومطور المنصة التعليمية المتكاملة باستخدام Next.js",
           problem:
-            "واجهت العمليات الصناعية واللوجستية فروقات غير مبررة وهدراً مكلفاً بين قراءات عدادات التوزيع الرقمية (SmartFill/MFN) وقراءات القياس الفعلي للخزانات.",
-          role: "مهندس تكامل أنظمة وبيانات",
+            "كانت الأكاديمية بحاجة إلى منصة ويب رقمية تفاعلية وسريعة جداً لعرض البرامج التدريبية وإتاحة تسجيل الطلاب دون أي بطء أو تعقيدات في واجهة الاستخدام.",
+          role: "شريك مؤسس ومطور ويب متكامل",
           solution:
-            "برمجة خوارزميات مطابقة تلقائية تتحقق من أرصدة البداية، وتوريدات الوقود، والكميات المصروفة، وقراءات الإغلاق، مع إطلاق تنبيهات استباقية فور وجود أي تباين.",
-          tools: ["بايثون", "SQL", "واجهات برمجة REST", "خوارزميات التحقق", "تقارير BI"],
+            "شاركت في تأسيس أكاديمية جين وقمت بتصميم وتطوير ونشر المنصة الإلكترونية بالكامل من الصفر باستخدام Next.js و TypeScript و Tailwind CSS. بناء واجهات تفاعلية متجاوبة ومسارات ديناميكية وتحسين محركات البحث وتجربة تسجيل سلسة. إدارة دورة حياة البرمجيات كاملة من جمع المتطلبات حتى النشر والصيانة المستمرة.",
+          tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "واجهات REST"],
           result:
-            "تحقيق دقة مطابقة بلغت 99.8%، وإلغاء ساعات الجرد اليدوي بالكامل مع تمكين مديري المستودعات من كشف أي تسريب أو هدر لحظياً.",
-          image: "/projects/fuel-management-dashboard.jpg",
-        },
-        {
-          id: "n8n-automation",
-          title: "محرك أتمتة تدفقات العمل الذكي (n8n & Node.js)",
-          tagline: "نظام أتمتة موجه بالأحداث يربط Webhooks وقواعد البيانات وقنوات الإشعارات الفورية",
-          problem:
-            "استنزاف أكثر من 5 ساعات عمل أسبوعياً في إدخال البيانات يدوياً بين المنصات المختلفة ومتابعة تحديثات المهام والتقارير الدورية.",
-          role: "مهندس أتمتة وتطوير خلفي",
-          solution:
-            "بناء تدفقات عمل آلية متكاملة باستخدام n8n وخدمات Node.js وربطها بقواعد بيانات PostgreSQL وإشعارات فورية لمزامنة التقارير تلقائياً فور وقوع الحدث.",
-          tools: ["n8n", "Node.js", "PostgreSQL", "Webhooks", "Docker", "JSON"],
-          result:
-            "توفير أكثر من 5 ساعات أسبوعياً، والقضاء التام على أخطاء الإدخال البشري، مع ضمان تحديث السجلات بشكل لحظي وبأعلى موثوقية.",
-          image: "/projects/n8n-workflow-automation.jpg",
+            "إطلاق المنصة الحية رسمياً على gen-academy.org، وزيادة معدل التحويل للتسجيل، وتقليل وقت تحميل الصفحات بنسبة 40% مع خدمة مئات الطلاب بموثوقية عالية.",
+          image: "/assets/gen-logo-only.png",
+          link: "https://gen-academy.org",
         },
       ],
     },
@@ -944,19 +903,21 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           id: "fcai-cu",
           institution: "كلية الحاسبات والذكاء الاصطناعي - جامعة القاهرة (FCAI-CU)",
           degree: "بكالوريوس علوم الحاسب (Computer Science)",
-          period: "2021 – حتى الآن",
+          period: "2024",
           description:
             "دراسة معمقة في هياكل البيانات، الخوارزميات، نظم قواعد البيانات، نظم التشغيل، هندسة البرمجيات، والحوسبة الموزعة.",
           badge: "FCAI-CU",
+          logo: "/assets/fcai-logo.png",
         },
         {
           id: "depi-program",
           institution: "مبادرة رواد مصر الرقمية (DEPI) — وزارة الاتصالات المصرية",
           degree: "تخصص احترافي في هندسة البيانات (Data Engineering)",
-          period: "2024 – حتى الآن",
+          period: "2026 – حتى الآن",
           description:
             "منحة تقنية تخصصية مكثفة تركز على خطوط البيانات المؤسسية، مستودعات البيانات السحابية، تحسين استعلامات SQL، ونشر الأنظمة للإنتاج.",
-          badge: "خريج DEPI",
+          badge: "متدرب DEPI",
+          logo: "/assets/depi-logo.png",
         },
       ],
       certificatesTitle: "الشهادات والاعتمادات الدولية",
@@ -967,6 +928,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "أكاديمية هواوي (Huawei ICT Academy)",
           date: "معتمد",
           credentialId: "HCIA-BD-EG",
+          iconImage: "/assets/huawei-ict-logo.png",
         },
         {
           id: "hcia-security",
@@ -974,6 +936,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "أكاديمية هواوي (Huawei ICT Academy)",
           date: "معتمد",
           credentialId: "HCIA-SEC-EG",
+          iconImage: "/assets/huawei-ict-logo.png",
         },
         {
           id: "hcib-security",
@@ -981,6 +944,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "أكاديمية هواوي (Huawei ICT Academy)",
           date: "معتمد",
           credentialId: "HCIB-SEC",
+          iconImage: "/assets/huawei-ict-logo.png",
         },
         {
           id: "gci-world",
@@ -988,6 +952,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "GCI World",
           date: "معتمد",
           credentialId: "GCI-TECH",
+          iconImage: "/assets/gci-logo.png",
         },
         {
           id: "itida-gigs",
@@ -995,6 +960,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "هيئة تنمية صناعة تكنولوجيا المعلومات (إيتيدا)",
           date: "مكتمل",
           credentialId: "ITIDA-GIGS",
+          iconImage: "/assets/itida-gigs-logo.png",
         },
         {
           id: "mahara-tech",
@@ -1002,6 +968,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           issuer: "معهد تكنولوجيا المعلومات (ITI)",
           date: "مكتمل",
           credentialId: "ITI-MT",
+          iconImage: "/assets/mahara-tech-logo.png",
         },
       ],
     },
@@ -1012,11 +979,11 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       items: [
         {
           id: "m1",
-          title: "تفوق بارز في مسار هندسة البيانات بـ DEPI",
+          title: "أداء متميز في مسار هندسة البيانات بـ DEPI",
           category: "التدريب الأكاديمي والمهني",
           description:
             "الحصول على إشادات متميزة في مشاريع بناء خطوط البيانات القابلة للتوسع وتحسين أداء قواعد البيانات ضمن مبادرة رواد مصر الرقمية.",
-          metric: "أعلى تقييم بالدفعة",
+          iconImage: "/assets/depi-logo.png",
         },
         {
           id: "m2",
@@ -1025,6 +992,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           description:
             "اجتياز الاختبارات المهنية المعتمدة في البيانات الضخمة (Big Data) والأمن السيبراني (Security) بمستوى عالي من التميز.",
           metric: "3 شهادات معتمدة",
+          iconImage: "/assets/huawei-logo.png",
         },
         {
           id: "m3",
@@ -1033,22 +1001,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           description:
             "بناء ونشر منصة ويب تفاعلية متكاملة تخدم مئات الطلاب بكفاءة وأداء متميز.",
           metric: "منصة إنتاجية حية",
-        },
-        {
-          id: "m4",
-          title: "تقييم كامل 10/10 للقيمة في نموذج العرض الفني (A-C-E-V)",
-          category: "التواصل وإدارة الحلول",
-          description:
-            "الحصول على تقييم 9.5/10 للموثوقية و 10/10 لقيمة العرض الفني وفق معايير التقييم التنفيذية المعتمدة للمؤسسات.",
-          metric: "10/10 تقييم القيمة",
-        },
-        {
-          id: "m5",
-          title: "دقة مطابقة خطوط البيانات بنسبة 99.8%",
-          category: "الأثر الهندسي والعملي",
-          description:
-            "تطوير خوارزمية ذكية لمطابقة استهلاك الوقود الصناعي كشفت الفروقات لحظياً وألغت آلاف الساعات من العمل اليدوي.",
-          metric: "99.8% دقة وموثوقية",
+          iconImage: "/assets/gen-logo-only.png",
         },
       ],
     },
@@ -1079,7 +1032,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     footer: {
       rights: "جميع الحقوق محفوظة.",
-      designedWith: "تم التطوير باستخدام Next.js و Tailwind CSS و Framer Motion.",
+      designedWith: "Mostafa Morad Portfolio",
       backToTop: "العودة للأعلى",
     },
   },

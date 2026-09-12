@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useThemeLanguage } from "@/context/ThemeLanguageContext";
 import { Trophy, Star, CheckCircle } from "lucide-react";
 
@@ -15,7 +16,7 @@ export default function Achievements() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/50 mb-3">
-            <Trophy className="w-3.5 h-3.5" />
+            <Trophy className="w-3.5 h-3.5" aria-hidden="true" />
             <span>{achievements.title}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
@@ -39,9 +40,15 @@ export default function Achievements() {
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-white flex items-center justify-center font-bold shadow-md shadow-amber-500/20 group-hover:scale-110 transition-transform">
-                    <Star className="w-5 h-5 fill-white" />
-                  </div>
+                  {item.iconImage ? (
+                    <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-md p-1 group-hover:scale-110 transition-transform overflow-hidden" aria-hidden="true">
+                      <Image src={item.iconImage} alt="" width={40} height={40} className="w-full h-full object-contain" />
+                    </div>
+                  ) : (
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-white flex items-center justify-center font-bold shadow-md shadow-amber-500/20 group-hover:scale-110 transition-transform" aria-hidden="true">
+                      <Star className="w-5 h-5 fill-white" />
+                    </div>
+                  )}
                   {item.metric && (
                     <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 dark:bg-slate-700 text-indigo-700 dark:text-cyan-300 border border-indigo-200/50 dark:border-slate-600">
                       <bdi>{item.metric}</bdi>
@@ -63,7 +70,7 @@ export default function Achievements() {
               </div>
 
               <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                <CheckCircle className="w-3.5 h-3.5" />
+                <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{achievements.verifiedLabel}</span>
               </div>
             </motion.div>

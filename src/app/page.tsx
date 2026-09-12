@@ -1,3 +1,4 @@
+import DataRainBackground from "@/components/DataRainBackground";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -12,20 +13,25 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors duration-300">
-      <Navbar />
-      <main className="flex-grow">
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Services />
-        <Education />
-        <Achievements />
-        <Contact />
-      </main>
-      <Footer />
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 transition-colors duration-300 relative">
+      {/* Animated Data Rain Background */}
+      <DataRainBackground />
+      
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar />
+        <main id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Services />
+          <Education />
+          <Achievements />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }

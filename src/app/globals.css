@@ -7,6 +7,8 @@ html {
 }
 
 :root {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
   --background: #ffffff;
   --foreground: #0f172a;
   --card-bg: #f8fafc;
@@ -27,6 +29,13 @@ body {
   overflow-x: hidden;
 }
 
+/* Enhanced Arabic Typography Fallback */
+[lang="ar"], [dir="rtl"] {
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-family: var(--font-geist-sans), "Segoe UI", "Noto Sans Arabic", "Cairo", "Tahoma", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -40,6 +49,38 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.7);
+}
+
+/* Data Rain Animation */
+.data-rain-drop {
+  animation: dataRainFall linear infinite;
+  will-change: transform;
+}
+
+.data-rain-node {
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.6) 0%, transparent 70%);
+  animation: dataNodePulse ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes dataRainFall {
+  0% {
+    transform: translateY(-60px);
+  }
+  100% {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes dataNodePulse {
+  0%, 100% {
+    opacity: 0.04;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.12;
+    transform: scale(1.8);
+  }
 }
 
 @layer utilities {

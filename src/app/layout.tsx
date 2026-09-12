@@ -38,33 +38,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="ltr" className="dark" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var savedTheme = localStorage.getItem('portfolio_theme');
-                  var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-                  if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
-                    document.documentElement.classList.remove('dark');
-                  } else {
-                    document.documentElement.classList.add('dark');
-                  }
-                  var savedLang = localStorage.getItem('portfolio_lang');
-                  if (savedLang === 'ar') {
-                    document.documentElement.lang = 'ar';
-                    document.documentElement.dir = 'rtl';
-                  } else {
-                    document.documentElement.lang = 'en';
-                    document.documentElement.dir = 'ltr';
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
-      </head>
+      <head />
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased selection:bg-indigo-500 selection:text-white`}
       >

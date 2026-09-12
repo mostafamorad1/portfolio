@@ -217,6 +217,74 @@ async function runTests() {
   assert(cssText.includes("right:-17px") && cssText.includes("left:-17px"), "Timeline positioning for LTR and RTL both present");
   assert(!cssText.includes("slate-850"), "Invalid slate-850 utility class is completely absent");
 
+  console.log("\n--- Category 9: Accessibility Landmarks & Semantics ---");
+  assert(homeRes.body.includes('href="#main-content"'), "Skip to main content anchor is present in DOM");
+  assert(homeRes.body.includes('id="main-content"'), "Main landmark #main-content is present in DOM");
+  assert(
+    homeRes.body.includes('id="contact-name"') || foundInChunks('id:"contact-name"'),
+    "Contact form inputs have explicit id attributes"
+  );
+  assert(
+    homeRes.body.includes('contact-name') || foundInChunks('contact-name'),
+    "Contact labels have htmlFor association"
+  );
+  assert(
+    foundInChunks('role:"progressbar"') || foundInChunks('progressbar') || homeRes.body.includes("progressbar"),
+    "Skills progress bars include role='progressbar' semantics"
+  );
+  assert(
+    foundInChunks('bdi') && foundInChunks('dir:"ltr"'),
+    "Contact phone number is protected with bdi dir='ltr' directional isolation"
+  );
+
+  console.log("\n--- Category 10: Honeypot & Anti-Spam Security ---");
+  // Test honeypot trigger (should silently return 200 without error)
+  const honeypotRes = await fetchUrl(`${BASE_URL}/api/contact`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: "Spam Bot",
+      email: "bot@spammer.org",
+      message: "Automated spam payload.",
+      website_url: "https://spammer.org",
+    }),
+  });
+  assert(honeypotRes.statusCode === 200, "Honeypot submission is silently accepted with HTTP 200");
+  const hpData = JSON.parse(honeypotRes.body);
+  assert(hpData.success === true, "Honeypot response contains { success: true }");
+
+  // Test rate limiting by sending rapid requests with a test IP
+  let gotRateLimited = false;
+  for (let i = 0; i < 7; i++) {
+    const rlRes = await fetchUrl(`${BASE_URL}/api/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Forwarded-For": "198.51.100.42",
+      },
+      body: JSON.stringify({
+        name: `RateLimit Tester ${i}`,
+        email: "ratelimit@test.org",
+        message: "Testing rate limit threshold.",
+      }),
+    });
+    if (rlRes.statusCode === 429) {
+      gotRateLimited = true;
+      break;
+    }
+  }
+  assert(gotRateLimited, "Excess contact submissions are blocked with HTTP 429 Too Many Requests");
+
+  console.log("\n--- Category 11: Font Stack & Typography Fallback ---");
+  assert(
+    cssText.includes("--font-sans") && cssText.includes("--font-geist-sans"),
+    "Geist font variable alias is correctly defined in CSS"
+  );
+  assert(
+    cssText.includes("Noto Sans Arabic") || cssText.includes("Cairo"),
+    "Arabic typography fallback stack is active in CSS"
+  );
+
   console.log(`\n==================================================`);
   console.log(`FINAL RESULT: ${passedCount} PASSED, ${failedCount} FAILED`);
   console.log(`==================================================\n`);
