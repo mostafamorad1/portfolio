@@ -112,12 +112,12 @@ export default function DataRainBackground() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1"
-                className="text-cyan-400"
+                className="text-indigo-800 dark:text-cyan-400"
               >
                 <path d={drop.iconPath} />
               </svg>
             ) : (
-              <span className="text-cyan-400/80 font-mono whitespace-nowrap select-none">
+              <span className="text-indigo-800 dark:text-cyan-400/80 font-mono whitespace-nowrap select-none">
                 {drop.text}
               </span>
             )}

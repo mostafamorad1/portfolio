@@ -58,7 +58,7 @@ body {
 }
 
 .data-rain-node {
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.4) 0%, transparent 70%);
   animation: dataNodePulse ease-in-out infinite;
   will-change: opacity;
 }
@@ -87,4 +87,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.dark .data-rain-node {
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.6) 0%, transparent 70%);
 }
