@@ -43,28 +43,28 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-7 flex flex-col items-start rtl:items-start text-left rtl:text-right pt-10"
+            className="lg:col-span-7 flex flex-col items-start text-start pt-10"
           >
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-indigo-500/10 text-indigo-400 rounded border border-indigo-500/20">
                 {isRtl ? "مهندس بيانات" : "DATA ENGINEER"}
               </span>
-              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-slate-800 text-slate-300 rounded border border-slate-700">
+              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded border border-slate-300 dark:border-slate-700">
                 DEPI
               </span>
-              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-slate-800 text-slate-300 rounded border border-slate-700">
+              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded border border-slate-300 dark:border-slate-700">
                 {isRtl ? "مطور متكامل" : "FULL-STACK"}
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
               {hero.headline}
             </h1>
 
             {/* Description */}
-            <p className="text-lg text-slate-400 leading-relaxed font-medium mb-10 max-w-2xl">
+            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium mb-10 max-w-2xl">
               {hero.usp}
             </p>
 
@@ -83,7 +83,7 @@ export default function Hero() {
               <a
                 href={personalInfo.cvFile}
                 download="Mostafa_Morad_CV.pdf"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-transparent text-slate-300 hover:text-white font-medium text-sm border border-slate-700 hover:border-slate-500 hover:bg-slate-800/50 transition-all focus:outline-none"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-transparent text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white font-medium text-sm border border-slate-300 hover:border-slate-400 dark:border-slate-700 dark:hover:border-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all focus:outline-none"
               >
                 <span>{hero.downloadCv}</span>
               </a>
@@ -104,7 +104,7 @@ export default function Hero() {
                   opacity: profileOpacity,
                   transformOrigin: "center top"
                 }}
-                className="relative w-[280px] sm:w-[320px] lg:w-[360px] aspect-[3/4] shadow-[0_0_40px_rgba(245,158,11,0.1)] border border-amber-500/30 bg-slate-900 overflow-hidden rounded-[24px]"
+                className="relative w-[280px] sm:w-[320px] lg:w-[360px] aspect-[3/4] shadow-[0_0_40px_rgba(245,158,11,0.1)] border border-amber-500/30 bg-slate-200 dark:bg-slate-900 overflow-hidden rounded-[24px]"
               >
               <Image
                 src="/profile.jpg"

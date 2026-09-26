@@ -590,6 +590,17 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
         },
       ],
     },
+    testimonials: {
+      title: "Testimonials",
+      subtitle: "What others say about my work and collaboration",
+      items: [
+        {
+          id: "1",
+          quote: "Mostafa is an exceptional data engineer who consistently delivers high-quality, scalable solutions.",
+          attribution: "Senior Data Scientist",
+        }
+      ]
+    },
     contact: {
       title: "Get In Touch",
       subtitle: "Ready to discuss your next data pipeline, BI dashboard, or web application? Let's connect.",
@@ -1015,6 +1026,17 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           iconImage: "/assets/gen-logo-only.png",
         },
       ],
+    },
+    testimonials: {
+      title: "التوصيات والآراء",
+      subtitle: "ما يقوله الآخرون عن العمل معي والمشاريع المشتركة",
+      items: [
+        {
+          id: "1",
+          quote: "مصطفى مهندس بيانات استثنائي يقدم دائماً حلولاً عالية الجودة وقابلة للتوسع.",
+          attribution: "كبير علماء البيانات",
+        }
+      ]
     },
     contact: {
       title: "تواصل معي",

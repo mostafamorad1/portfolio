@@ -23,14 +23,14 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-yellow-400 border border-yellow-400/30 mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-200 dark:bg-slate-800 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30 dark:border-yellow-400/30 mb-3">
             <FolderGit2 className="w-3.5 h-3.5" />
             <span>{projects.title}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {projects.title}
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-400">
+          <p className="mt-3 text-base sm:text-lg text-slate-600 dark:text-slate-400">
             {projects.subtitle}
           </p>
         </div>
@@ -48,12 +48,12 @@ export default function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`rounded-3xl bg-slate-900 border border-slate-800 shadow-md overflow-hidden hover:shadow-xl transition-all flex flex-col ${
+                className={`rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden hover:shadow-xl transition-all flex flex-col ${
                   isLarge ? "lg:col-span-2" : "lg:col-span-1"
                 }`}
               >
                 {/* Image Section */}
-                <div className={`relative w-full ${isLarge ? "h-64 sm:h-80 lg:h-96" : "h-48 sm:h-56"} bg-slate-800 flex items-center justify-center overflow-hidden group`}>
+                <div className={`relative w-full ${isLarge ? "h-64 sm:h-80 lg:h-96" : "h-48 sm:h-56"} bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden group`}>
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -69,7 +69,7 @@ export default function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Visit: ${project.title}`}
-                      className="absolute top-4 right-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/80 text-white backdrop-blur-sm border border-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-colors z-10"
+                      className="absolute top-4 end-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/80 text-white backdrop-blur-sm border border-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-colors z-10"
                     >
                       <ArrowUpRight className="w-5 h-5" />
                     </a>
@@ -85,20 +85,20 @@ export default function Projects() {
                       <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">{project.role}</span>
                     </div>
 
-                    <h3 className={`font-bold text-white mb-2 ${isLarge ? "text-2xl sm:text-3xl" : "text-xl"}`}>
+                    <h3 className={`font-bold text-slate-900 dark:text-white mb-2 ${isLarge ? "text-2xl sm:text-3xl" : "text-xl"}`}>
                       {project.title}
                     </h3>
-                    <p className="text-sm font-medium text-yellow-400 mb-4">
+                    <p className="text-sm font-medium text-yellow-600 dark:text-yellow-400 mb-4">
                       {project.tagline}
                     </p>
 
                     <div className="space-y-3 mb-4">
-                      <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                        <div className="flex items-center gap-2 text-xs font-bold text-slate-300 mb-1">
-                          <Cpu className="w-3.5 h-3.5 text-yellow-400" />
+                      <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+                        <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                          <Cpu className="w-3.5 h-3.5 text-yellow-600 dark:text-yellow-400" />
                           <span>{labels.solution}</span>
                         </div>
-                        <p className={`text-sm text-slate-400 ${isExpanded ? "" : "line-clamp-3"}`}>
+                        <p className={`text-sm text-slate-600 dark:text-slate-400 ${isExpanded ? "" : "line-clamp-3"}`}>
                           {project.solution}
                         </p>
                       </div>
@@ -116,23 +116,23 @@ export default function Projects() {
                         >
                           <div className="space-y-3 mb-4">
                             {/* Problem */}
-                            <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                              <div className="flex items-center gap-2 text-xs font-bold text-slate-300 mb-1">
-                                <Target className="w-3.5 h-3.5 text-red-400" />
+                            <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+                              <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                                <Target className="w-3.5 h-3.5 text-red-500 dark:text-red-400" />
                                 <span>{labels.problem}</span>
                               </div>
-                              <p className="text-sm text-slate-400">
+                              <p className="text-sm text-slate-600 dark:text-slate-400">
                                 {project.problem}
                               </p>
                             </div>
 
                             {/* Result */}
-                            <div className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                              <div className="flex items-center gap-2 text-xs font-bold text-slate-300 mb-1">
-                                <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                            <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+                              <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                                <TrendingUp className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                                 <span>{labels.result}</span>
                               </div>
-                              <p className="text-sm text-slate-400">
+                              <p className="text-sm text-slate-600 dark:text-slate-400">
                                 {project.result}
                               </p>
                             </div>
@@ -151,18 +151,18 @@ export default function Projects() {
                     </button>
                   </div>
 
-                  <div className="border-t border-slate-800 pt-4 mt-auto">
+                  <div className="border-t border-slate-200 dark:border-slate-800 pt-4 mt-auto">
                     <div className="flex flex-wrap gap-1.5">
                       {project.tools.slice(0, isLarge ? 8 : 6).map((tool, tIdx) => (
                         <span
                           key={tIdx}
-                          className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700"
+                          className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
                         >
                           {tool}
                         </span>
                       ))}
                       {project.tools.length > (isLarge ? 8 : 6) && (
-                        <span className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                        <span className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                           +{project.tools.length - (isLarge ? 8 : 6)}
                         </span>
                       )}

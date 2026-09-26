@@ -101,10 +101,10 @@ export default function About() {
               </h3>
             </div>
             
-            <div className="space-y-6 flex-grow border-l-2 border-slate-200 dark:border-slate-700 ml-2 pl-6 relative pt-2">
+            <div className="space-y-6 flex-grow border-s-2 border-slate-200 dark:border-slate-700 ms-2 ps-6 relative pt-2">
               {about.experienceTimeline.map((item, idx) => (
                 <div key={idx} className="relative">
-                  <div className="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-slate-200 dark:bg-slate-700 border-2 border-white dark:border-slate-900" />
+                  <div className="absolute -start-[31px] top-1 w-3.5 h-3.5 rounded-full bg-slate-200 dark:bg-slate-700 border-2 border-white dark:border-slate-900" />
                   <h4 className="text-base font-bold text-slate-900 dark:text-white leading-tight mb-1">{item.entity}</h4>
                   <p className="text-sm font-medium text-indigo-600 dark:text-cyan-400">{item.role}</p>
                 </div>
@@ -120,7 +120,7 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="md:col-span-2 p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 to-indigo-950 border border-indigo-500/30 shadow-xl relative overflow-hidden mt-2"
           >
-            <div className="absolute top-0 right-0 p-8 opacity-10">
+            <div className="absolute top-0 end-0 p-8 opacity-10">
               <Target className="w-48 h-48 text-indigo-300" />
             </div>
             

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeLanguageProvider } from "@/context/ThemeLanguageContext";
+import { InitThemeAndLanguage } from "@/components/InitThemeAndLanguage";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -12,6 +13,13 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+import { Cairo } from "next/font/google";
+const cairo = Cairo({
+  subsets: ["arabic"],
+  variable: "--font-cairo",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -38,10 +46,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="ltr" className="dark" suppressHydrationWarning>
-      <head />
+      <head>
+        <InitThemeAndLanguage />
+      </head>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased selection:bg-indigo-500 selection:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cairo.variable} font-sans antialiased selection:bg-indigo-500 selection:text-white bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300`}
       >
         <ThemeLanguageProvider>{children}</ThemeLanguageProvider>
       </body>

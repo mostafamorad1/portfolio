@@ -14,7 +14,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col relative transition-colors duration-300">
       {/* Animated Data Rain Background */}
       <DataRainBackground />
       

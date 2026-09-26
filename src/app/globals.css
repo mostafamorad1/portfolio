@@ -32,7 +32,7 @@ body {
 /* Enhanced Arabic Typography Fallback */
 [lang="ar"], [dir="rtl"] {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  font-family: var(--font-geist-sans), "Segoe UI", "Noto Sans Arabic", "Cairo", "Tahoma", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-family: var(--font-cairo), var(--font-geist-sans), "Segoe UI", "Noto Sans Arabic", "Tahoma", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   letter-spacing: 0;
 }
 

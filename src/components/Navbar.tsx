@@ -7,7 +7,7 @@ import { useThemeLanguage } from "@/context/ThemeLanguageContext";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
-  const { content, language } = useThemeLanguage();
+  const { content, language, toggleLanguage, theme, toggleTheme } = useThemeLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -161,14 +161,14 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out ${
         isScrolled ? "pt-4 px-4 sm:px-6" : "pt-0 px-0"
       }`}
     >
       {/* WCAG Skip to Main Content Link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 rtl:focus:left-auto rtl:focus:right-4 focus:z-[100] focus:px-4 focus:py-2.5 focus:bg-indigo-600 focus:text-white focus:font-semibold focus:rounded-xl focus:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:px-4 focus:py-2.5 focus:bg-indigo-600 focus:text-white focus:font-semibold focus:rounded-xl focus:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400"
       >
         {language === "ar" ? "الانتقال إلى المحتوى الرئيسي" : "Skip to main content"}
       </a>
@@ -185,7 +185,7 @@ export default function Navbar() {
           href="#home"
           onClick={(e) => handleNavClick(e, "home")}
           aria-label={language === "ar" ? "مصطفى مراد - الصفحة الرئيسية" : "Mostafa Morad - Homepage"}
-          className="text-left rtl:text-right group flex items-center gap-2.5 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          className="text-start group flex items-center gap-2.5 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         >
           <div className="w-10 h-10 rounded-full overflow-hidden shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform border-2 border-indigo-500/50" aria-hidden="true">
             <Image src="/profile.jpg" alt="" width={40} height={40} className="object-cover object-top w-full h-full" />
@@ -232,7 +232,28 @@ export default function Navbar() {
         {/* Toggles & CTA */}
         <div className="flex items-center gap-2 sm:gap-3">
 
-
+          {/* Language & Theme Switchers */}
+          <div className="flex items-center gap-1.5 p-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70">
+            <button
+              onClick={toggleLanguage}
+              className="px-2 py-1 text-xs font-semibold rounded-md transition-colors hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 min-w-[36px]"
+              aria-label={language === "en" ? "Switch to Arabic" : "Switch to English"}
+            >
+              {language === "en" ? "AR" : "EN"}
+            </button>
+            <div className="w-[1px] h-4 bg-slate-300 dark:bg-slate-600"></div>
+            <button
+              onClick={toggleTheme}
+              className="p-1 rounded-md transition-colors hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              aria-label={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
+            >
+              {theme === "light" ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              )}
+            </button>
+          </div>
 
           {/* Mobile menu button */}
           <button
@@ -283,7 +304,7 @@ export default function Navbar() {
                     href={`#${item.id}`}
                     onClick={(e) => handleNavClick(e, item.id)}
                     aria-current={isActive ? "page" : undefined}
-                    className={`text-left rtl:text-right px-3 py-2.5 rounded-lg text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                    className={`text-start px-3 py-2.5 rounded-lg text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
                       isActive
                         ? "bg-indigo-600 text-white font-semibold shadow-sm shadow-indigo-600/20"
                         : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"

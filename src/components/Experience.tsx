@@ -27,7 +27,7 @@ export default function Experience() {
         </div>
 
         {/* Timeline / Experience Cards */}
-        <div className="relative ltr:border-l-2 rtl:border-r-2 border-indigo-200 dark:border-slate-800 ltr:ml-4 rtl:mr-4 ltr:md:ml-32 rtl:md:mr-32 space-y-12">
+        <div className="relative border-s-2 border-indigo-200 dark:border-slate-800 ms-4 md:ms-32 space-y-12">
           {experience.items.map((item, index) => (
             <motion.div
               key={item.id}
@@ -35,10 +35,10 @@ export default function Experience() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative ltr:pl-6 rtl:pr-6"
+              className="relative ps-6"
             >
               {/* Timeline marker icon */}
-              <div className="absolute ltr:-left-[17px] rtl:-right-[17px] top-1.5 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 border-4 border-white dark:border-slate-900" aria-hidden="true">
+              <div className="absolute -start-[17px] top-1.5 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 border-4 border-white dark:border-slate-900" aria-hidden="true">
                 <Award className="w-3.5 h-3.5" />
               </div>
 

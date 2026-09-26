@@ -39,7 +39,7 @@ export default function Testimonials() {
               transition={{ duration: 0.5, delay: index * 0.2 }}
               className="p-8 rounded-3xl bg-white dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-800 shadow-md relative"
             >
-              <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-200 dark:text-slate-800/50" />
+              <Quote className="absolute top-8 end-8 w-12 h-12 text-slate-200 dark:text-slate-800/50" />
               <div className="relative z-10">
                 <p className="text-lg text-slate-700 dark:text-slate-300 italic mb-8 relative leading-relaxed">
                   &quot;{testimonial.quote}&quot;
