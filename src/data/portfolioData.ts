@@ -62,6 +62,12 @@ export interface MilestoneItem {
   iconImage?: string;
 }
 
+export interface TestimonialItem {
+  id: string;
+  quote: string;
+  attribution: string;
+}
+
 export interface PortfolioContent {
   nav: {
     home: string;
@@ -151,6 +157,11 @@ export interface PortfolioContent {
     subtitle: string;
     verifiedLabel: string;
     items: MilestoneItem[];
+  };
+  testimonials: {
+    title: string;
+    subtitle: string;
+    items: TestimonialItem[];
   };
   contact: {
     title: string;
