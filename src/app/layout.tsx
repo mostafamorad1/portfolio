@@ -16,11 +16,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-import { Cairo } from "next/font/google";
-const cairo = Cairo({
-  subsets: ["arabic"],
+const cairo = localFont({
+  src: "./fonts/CairoVF.woff2",
   variable: "--font-cairo",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: "300 900",
 });
 
 export const metadata: Metadata = {
