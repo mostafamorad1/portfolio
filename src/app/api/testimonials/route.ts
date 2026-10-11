@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
+
+export const runtime = "edge";
 
 export interface StoredTestimonial {
   id: string;
@@ -12,33 +12,20 @@ export interface StoredTestimonial {
   createdAt?: string;
 }
 
-const DATA_FILE_PATH = path.join(process.cwd(), "src", "data", "testimonials-store.json");
-
-async function loadTestimonials(): Promise<StoredTestimonial[]> {
-  try {
-    const raw = await fs.readFile(DATA_FILE_PATH, "utf-8");
-    const data = JSON.parse(raw);
-    if (Array.isArray(data)) {
-      return data;
-    }
-  } catch {
-    // File doesn't exist or error reading: create it with empty list
-  }
-
-  try {
-    await fs.mkdir(path.dirname(DATA_FILE_PATH), { recursive: true });
-    await fs.writeFile(DATA_FILE_PATH, JSON.stringify([], null, 2), "utf-8");
-  } catch (err) {
-    console.error("Failed to write initial testimonials:", err);
-  }
-
-  return [];
-}
+// In-memory store for edge runtime
+let inMemoryTestimonials: StoredTestimonial[] = [];
 
 export async function GET() {
   try {
-    const testimonials = await loadTestimonials();
-    return NextResponse.json({ success: true, testimonials }, { status: 200 });
+    return NextResponse.json(
+      { success: true, testimonials: inMemoryTestimonials },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "public, s-maxage=10, stale-while-revalidate=59",
+        },
+      }
+    );
   } catch (err) {
     console.error("Error fetching testimonials:", err);
     return NextResponse.json(
@@ -77,8 +64,6 @@ export async function POST(request: Request) {
 
     const numericRating = typeof rating === "number" && rating >= 1 && rating <= 5 ? rating : 5;
 
-    const currentList = await loadTestimonials();
-
     const newTestimonial: StoredTestimonial = {
       id: `review-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       name: name.trim(),
@@ -89,17 +74,14 @@ export async function POST(request: Request) {
     };
 
     // Prepend new review so it appears first / prominently
-    const updatedList = [newTestimonial, ...currentList];
-
-    await fs.mkdir(path.dirname(DATA_FILE_PATH), { recursive: true });
-    await fs.writeFile(DATA_FILE_PATH, JSON.stringify(updatedList, null, 2), "utf-8");
+    inMemoryTestimonials = [newTestimonial, ...inMemoryTestimonials];
 
     return NextResponse.json(
       {
         success: true,
         message: "Testimonial submitted successfully!",
         testimonial: newTestimonial,
-        testimonials: updatedList,
+        testimonials: inMemoryTestimonials,
       },
       { status: 201 }
     );

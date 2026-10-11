@@ -49,22 +49,37 @@ export default function Testimonials() {
   const autoPlayTimerRef = useRef<NodeJS.Timeout | null>(null);
   const isHoveredRef = useRef(false);
 
-  // Fetch testimonials from API on mount
+  // Fetch testimonials from API on mount & merge with any local submissions
   useEffect(() => {
     let isMounted = true;
     async function fetchTestimonials() {
+      let localList: TestimonialItem[] = [];
+      try {
+        const stored = typeof window !== "undefined" ? localStorage.getItem("user_testimonials") : null;
+        if (stored) localList = JSON.parse(stored);
+      } catch {}
+
       try {
         const res = await fetch("/api/testimonials");
         if (res.ok) {
           const data = await res.json();
           if (isMounted && data.success && Array.isArray(data.testimonials)) {
-            setTestimonials(data.testimonials);
+            const combined = [...data.testimonials, ...localList];
+            const uniqueMap = new Map<string, TestimonialItem>();
+            combined.forEach((item) => {
+              if (item?.id) uniqueMap.set(item.id, item);
+            });
+            setTestimonials(Array.from(uniqueMap.values()));
+            return;
           }
         }
       } catch (err) {
         console.warn("Could not fetch testimonials:", err);
       } finally {
-        if (isMounted) setIsLoading(false);
+        if (isMounted) {
+          if (localList.length > 0) setTestimonials(localList);
+          setIsLoading(false);
+        }
       }
     }
     fetchTestimonials();
@@ -139,11 +154,18 @@ export default function Testimonials() {
       const result = await res.json();
       if (res.ok && result.success) {
         setSubmitSuccess(true);
+        let updated: TestimonialItem[] = [];
         if (Array.isArray(result.testimonials)) {
-          setTestimonials(result.testimonials);
+          updated = result.testimonials;
         } else if (result.testimonial) {
-          setTestimonials((prev) => [result.testimonial, ...prev]);
+          updated = [result.testimonial, ...testimonials];
         }
+        setTestimonials(updated);
+        try {
+          if (typeof window !== "undefined") {
+            localStorage.setItem("user_testimonials", JSON.stringify(updated));
+          }
+        } catch {}
         setActiveIndex(0); // Focus on newly added review
 
         setTimeout(() => {
