@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useThemeLanguage } from "@/context/ThemeLanguageContext";
-import { Mail, Phone, MapPin, Send, CheckCircle2, MessageSquare, AlertCircle } from "lucide-react";
-import { personalInfo } from "@/data/portfolioData";
+import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, Copy, Check, ExternalLink } from "lucide-react";
+import { personalInfo, getWhatsAppLink } from "@/data/portfolioData";
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -20,12 +20,36 @@ function LinkedInIcon({ className }: { className?: string }) {
   );
 }
 
+function GithubIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3" />
+    </svg>
+  );
+}
 
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.93.95-3.48-.22-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.68c0 5.2-4.24 9.44-9.44 9.44zm8.04-17.48A11.3 11.3 0 0 0 12.04.7C5.78.7.68 5.8.68 12.06c0 2 .52 3.96 1.52 5.68L.58 23.3l5.7-1.5a11.33 11.33 0 0 0 5.76 1.47h.01c6.26 0 11.36-5.1 11.36-11.36 0-3.04-1.18-5.89-3.32-8.04z" />
+    </svg>
+  );
+}
 
 export default function Contact() {
   const { content, language } = useThemeLanguage();
   const contact = content.contact;
   const formLabels = contact.form;
+
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(personalInfo.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -108,82 +132,153 @@ export default function Contact() {
               {contact.infoText}
             </p>
 
-            <div className="space-y-4 pt-2">
-              {/* Email */}
-              <a
-                href={`mailto:${personalInfo.email}`}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/60 hover:border-indigo-500 transition-colors group shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-              >
-                <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-cyan-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true">
-                  <Mail className="w-5 h-5" />
+            <div className="space-y-3.5 pt-2">
+              {/* Email Card */}
+              <div className="group relative flex items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 hover:border-purple-400/50 dark:hover:border-purple-500/40 shadow-sm transition-all duration-300">
+                <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                  <div
+                    className="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800/60 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform"
+                    aria-hidden="true"
+                  >
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-400 block mb-0.5">
+                      EMAIL
+                    </span>
+                    <a
+                      href={`mailto:${personalInfo.email}`}
+                      className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 transition-colors block truncate"
+                    >
+                      {personalInfo.email}
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
-                    {contact.emailLabel}
-                  </span>
-                  <span className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">
-                    {personalInfo.email}
-                  </span>
-                </div>
-              </a>
 
-              {/* Phone */}
-              <a
-                href={`tel:${personalInfo.phoneClean}`}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/60 hover:border-indigo-500 transition-colors group shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-              >
-                <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-cyan-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true">
-                  <Phone className="w-5 h-5" />
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    title={copiedEmail ? (language === "ar" ? "تم النسخ!" : "Copied!") : (language === "ar" ? "نسخ الإيميل" : "Copy email")}
+                    aria-label="Copy email address"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/70 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                  >
+                    {copiedEmail ? (
+                      <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
+                  </button>
+                  <a
+                    href={`mailto:${personalInfo.email}`}
+                    title={language === "ar" ? "إرسال بريد" : "Send email"}
+                    aria-label="Send email"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/70 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                  >
+                    <Send className="w-4 h-4" />
+                  </a>
                 </div>
-                <div>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
-                    {contact.phoneLabel}
-                  </span>
-                  <span className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">
-                    <bdi dir="ltr">{personalInfo.phone}</bdi>
-                  </span>
-                </div>
-              </a>
+              </div>
 
-              {/* Location */}
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
-                <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-cyan-400 flex items-center justify-center shrink-0" aria-hidden="true">
-                  <MapPin className="w-5 h-5" />
+              {/* Phone Card */}
+              <div className="group relative flex items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 hover:border-cyan-400/50 dark:hover:border-cyan-500/40 shadow-sm transition-all duration-300">
+                <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                  <div
+                    className="w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-950/50 border border-cyan-200 dark:border-cyan-800/60 text-cyan-600 dark:text-cyan-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform"
+                    aria-hidden="true"
+                  >
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-400 block mb-0.5">
+                      PHONE
+                    </span>
+                    <a
+                      href={`tel:${personalInfo.phoneClean}`}
+                      className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors block"
+                    >
+                      <bdi dir="ltr">{personalInfo.phone}</bdi>
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block">
-                    {contact.locationLabel}
-                  </span>
-                  <span className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">
-                    {personalInfo.location[language]}
-                  </span>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={`tel:${personalInfo.phoneClean}`}
+                    title={language === "ar" ? "اتصال هاتفي" : "Call phone"}
+                    aria-label="Call phone number"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/70 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+
+              {/* WhatsApp Card */}
+              <div className="group relative flex items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 hover:border-emerald-400/50 dark:hover:border-emerald-500/40 shadow-sm transition-all duration-300">
+                <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                  <div
+                    className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform"
+                    aria-hidden="true"
+                  >
+                    <WhatsAppIcon className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-400 block mb-0.5">
+                      WHATSAPP
+                    </span>
+                    <a
+                      href={getWhatsAppLink(language)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors block"
+                    >
+                      {language === "ar" ? "تحدث معي" : "Chat with me"}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={getWhatsAppLink(language)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={language === "ar" ? "محادثة عبر واتساب" : "Chat on WhatsApp"}
+                    aria-label="Open WhatsApp chat"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/70 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                  >
+                    <Send className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
             </div>
 
-            {/* Social Links */}
-            <div className="pt-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-3">
-                {contact.socialsLabel}
-              </span>
-              <div className="flex items-center gap-3">
+            {/* Location & Social Links Bar */}
+            <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800/80">
+              <div className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+                <MapPin className="w-4 h-4 text-indigo-500 shrink-0" />
+                <span>{personalInfo.location[language]}</span>
+              </div>
+              <div className="flex items-center gap-2">
                 <a
                   href={personalInfo.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white hover:border-indigo-600 dark:hover:bg-indigo-600 dark:hover:border-indigo-600 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                  title="LinkedIn"
+                  className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-cyan-400 hover:border-indigo-300 transition-all flex items-center justify-center"
                 >
-                  <LinkedInIcon className="w-5 h-5" />
+                  <LinkedInIcon className="w-4 h-4" />
                 </a>
                 <a
-                  href={personalInfo.whatsapp}
+                  href={personalInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="WhatsApp"
-                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                  aria-label="GitHub"
+                  title="GitHub"
+                  className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-cyan-400 hover:border-indigo-300 transition-all flex items-center justify-center"
                 >
-                  <MessageSquare className="w-5 h-5" aria-hidden="true" />
+                  <GithubIcon className="w-4 h-4" />
                 </a>
               </div>
             </div>

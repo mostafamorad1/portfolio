@@ -51,44 +51,66 @@ body {
   background: rgba(148, 163, 184, 0.7);
 }
 
-/* Data Rain Animation */
-.data-rain-drop {
-  animation: dataRainFall linear infinite;
-  will-change: transform;
-}
-
-.data-rain-node {
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.4) 0%, transparent 70%);
-  animation: dataNodePulse ease-in-out infinite;
-  will-change: opacity;
-}
-
-@keyframes dataRainFall {
-  0% {
-    transform: translateY(-60px);
-  }
-  100% {
-    transform: translateY(110vh);
-  }
-}
-
-@keyframes dataNodePulse {
-  0%, 100% {
-    opacity: 0.04;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.12;
-    transform: scale(1.8);
-  }
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
-.dark .data-rain-node {
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.6) 0%, transparent 70%);
+/* ===== Photorealistic Cosmic & Solar Engine ===== */
+body {
+  background-color: transparent !important;
+}
+
+/* Smooth theme transitions targeted cleanly to structural surfaces */
+body, header, main, footer, section,
+.theme-surface,
+[class*="backdrop-blur"] {
+  transition: background-color 0.8s ease, border-color 0.8s ease, color 0.5s ease, box-shadow 0.8s ease;
+}
+
+/* Photorealistic Volumetric God Rays (Light Mode Sun) */
+.sun-god-rays {
+  border-radius: 9999px;
+  background: repeating-conic-gradient(
+    from 15deg,
+    rgba(254, 240, 138, 0.28) 0deg 9deg,
+    transparent 9deg 24deg,
+    rgba(251, 191, 36, 0.20) 24deg 36deg,
+    transparent 36deg 52deg
+  );
+  mask-image: radial-gradient(circle, transparent 15%, #000 32%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle, transparent 15%, #000 32%, transparent 75%);
+  filter: blur(10px);
+  animation: godRaysTurn 75s linear infinite;
+  will-change: transform;
+}
+
+@keyframes godRaysTurn {
+  to { transform: rotate(360deg); }
+}
+
+/* Photorealistic Atmospheric Cloudscapes */
+.sky-cloud-realistic {
+  position: absolute;
+  left: -40%;
+  aspect-ratio: 4 / 1;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 45%, rgba(255, 255, 255, 0) 75%);
+  filter: blur(16px);
+  animation: cloudDrift linear infinite;
+  box-shadow: 0 12px 45px rgba(254, 240, 138, 0.20);
+  will-change: transform;
+}
+
+.cloud-layer-1 { opacity: 0.65; }
+.cloud-layer-2 { opacity: 0.45; }
+.cloud-layer-3 { opacity: 0.35; }
+
+@keyframes cloudDrift {
+  to { transform: translateX(180vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sun-god-rays, .sky-cloud-realistic { animation: none; }
 }

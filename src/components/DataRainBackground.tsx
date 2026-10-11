@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 
 // Data-themed symbols for the rain effect
 const DATA_SYMBOLS = [
@@ -76,7 +76,17 @@ function generateDrops(count: number): RainDrop[] {
 }
 
 export default function DataRainBackground() {
-  const drops = useMemo(() => generateDrops(45), []);
+  const [mounted, setMounted] = React.useState(false);
+  const [drops, setDrops] = React.useState<RainDrop[]>([]);
+
+  React.useEffect(() => {
+    setDrops(generateDrops(45));
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true" />;
+  }
 
   return (
     <div

@@ -51,6 +51,8 @@ export interface ServiceItem {
   description: string;
   deliverables: string[];
   icon: string;
+  pricingCategoryId?: string;
+  startingPrice?: string;
 }
 
 export interface MilestoneItem {
@@ -68,16 +70,31 @@ export interface TestimonialItem {
   attribution: string;
 }
 
+export interface SkillItem {
+  name: string;
+  level?: number;
+  highlight?: boolean;
+}
+
+export interface SkillCategory {
+  id: string;
+  name: string;
+  icon: string;
+  skills: SkillItem[];
+}
+
 export interface PortfolioContent {
   nav: {
     home: string;
     about: string;
+    education: string;
+    credentials: string;
     skills: string;
     experience: string;
-    projects: string;
     services: string;
-    education: string;
+    projects: string;
     achievements: string;
+    testimonials: string;
     contact: string;
   };
   hero: {
@@ -114,12 +131,15 @@ export interface PortfolioContent {
     title: string;
     subtitle: string;
     allLabel: string;
-    categories: {
-      id: string;
-      name: string;
-      icon: string;
-      skills: { name: string; level: number; highlight?: boolean }[];
-    }[];
+    tabs: {
+      technical: string;
+      tools: string;
+      soft: string;
+    };
+    technical: SkillCategory[];
+    tools: SkillCategory[];
+    soft: SkillCategory[];
+    categories: SkillCategory[];
   };
   experience: {
     title: string;
@@ -142,6 +162,8 @@ export interface PortfolioContent {
   services: {
     title: string;
     subtitle: string;
+    viewPricing?: string;
+    pricingBadge?: string;
     items: ServiceItem[];
   };
   education: {
@@ -191,6 +213,12 @@ export interface PortfolioContent {
     rights: string;
     designedWith: string;
     backToTop: string;
+    connectTitle: string;
+    connectText: string;
+    whoTitle: string;
+    whoText: string;
+    tagline: string;
+    platformsTitle: string;
   };
 }
 
@@ -199,12 +227,14 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     nav: {
       home: "Home",
       about: "About",
+      education: "Education",
+      credentials: "Credentials",
       skills: "Skills",
       experience: "Experience",
-      projects: "Projects",
       services: "Services",
-      education: "Education & Certs",
+      projects: "Projects",
       achievements: "Achievements",
+      testimonials: "Testimonials",
       contact: "Contact",
     },
     hero: {
@@ -234,7 +264,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       subtitle: "Bridging the gap between raw data chaos and production-ready applications",
       hookTitle: "Who I Am",
       hookText:
-        "I’m a results-driven Data Engineer focused on building scalable data systems, high-performance ETL/ELT pipelines, and modern web applications that turn complex data into actionable insights.",
+        "I’m a results-driven Data Engineer and an Operations Research & Decision Support (OR & DS) student at Cairo University (FCAI-CU). I specialize in building scalable data systems, high-performance ETL/ELT pipelines, and data-driven web applications that turn complex data into optimized, actionable insights.",
       expertiseTitle: "Core Expertise",
       expertiseList: [
         { category: "Data Engineering", skills: ["ETL / ELT", "Data Warehousing", "SQL & Query Optimization", "Database Design"] },
@@ -253,9 +283,140 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       ]
     },
     skills: {
-      title: "Technical Skills",
-      subtitle: "Comprehensive toolset across data engineering, analytics, and software development",
+      title: "Skills & Expertise",
+      subtitle: "A balanced blend of engineering rigor, analytical tooling, and professional execution",
       allLabel: "All Skills",
+      tabs: {
+        technical: "Technical Skills",
+        tools: "Tools & Platforms",
+        soft: "Soft Skills",
+      },
+      technical: [
+        {
+          id: "data-engineering",
+          name: "Data Engineering & Architecture",
+          icon: "Database",
+          skills: [
+            { name: "ETL / ELT Pipelines", highlight: true },
+            { name: "SQL Query Optimization", highlight: true },
+            { name: "Python (Pandas, PySpark)", highlight: true },
+            { name: "Data Warehousing (BigQuery, Snowflake)", highlight: true },
+            { name: "Dimensional & Star Schema Modeling" },
+            { name: "Relational & NoSQL Databases" },
+            { name: "Data Integrity & Verification", highlight: true },
+            { name: "Big Data Processing" },
+          ],
+        },
+        {
+          id: "bi-analytics",
+          name: "Operations Research & Decision Science",
+          icon: "LineChart",
+          skills: [
+            { name: "Operations Research & Optimization", highlight: true },
+            { name: "Decision Support Systems (DSS)", highlight: true },
+            { name: "Mathematical Modeling & Linear Programming" },
+            { name: "Statistical & Predictive Analytics" },
+            { name: "KPI Hierarchy & Business Logic Modeling", highlight: true },
+            { name: "Variance & Trend Forecasting" },
+            { name: "Quantitative Decision Analysis" },
+          ],
+        },
+        {
+          id: "web-dev",
+          name: "Full-Stack Web Development",
+          icon: "Code2",
+          skills: [
+            { name: "Next.js (App Router)", highlight: true },
+            { name: "React & TypeScript", highlight: true },
+            { name: "Tailwind CSS & Responsive UI", highlight: true },
+            { name: "Node.js & RESTful APIs", highlight: true },
+            { name: "Supabase & PostgreSQL BaaS" },
+            { name: "Performance & SEO Optimization" },
+          ],
+        },
+      ],
+      tools: [
+        {
+          id: "bi-tools",
+          name: "Data & BI Analytics Tools",
+          icon: "BarChart3",
+          skills: [
+            { name: "Power BI & DAX", highlight: true },
+            { name: "Interactive KPI Dashboards", highlight: true },
+            { name: "Tableau Desktop" },
+            { name: "Advanced Excel (Power Query, DAX)", highlight: true },
+            { name: "Apache Spark" },
+            { name: "Jupyter Notebook & Google Colab" },
+          ],
+        },
+        {
+          id: "db-cloud",
+          name: "Databases & Cloud Platforms",
+          icon: "Cloud",
+          skills: [
+            { name: "PostgreSQL", highlight: true },
+            { name: "Google BigQuery", highlight: true },
+            { name: "Supabase BaaS", highlight: true },
+            { name: "Snowflake" },
+            { name: "MySQL / SQLite" },
+            { name: "Firebase Basics" },
+          ],
+        },
+        {
+          id: "dev-ops",
+          name: "DevOps, Automation & Dev Tools",
+          icon: "Wrench",
+          skills: [
+            { name: "Workflow Automation (n8n)", highlight: true },
+            { name: "Git & GitHub Version Control", highlight: true },
+            { name: "Docker & Containerization" },
+            { name: "Linux Environments & CLI", highlight: true },
+            { name: "Airflow Orchestration Basics" },
+            { name: "VS Code & Postman" },
+          ],
+        },
+      ],
+      soft: [
+        {
+          id: "problem-solving",
+          name: "Analytical & Problem Solving",
+          icon: "Brain",
+          skills: [
+            { name: "Analytical Problem Solving", highlight: true },
+            { name: "Data-Driven Decision Making", highlight: true },
+            { name: "Optimization Mindset", highlight: true },
+            { name: "Root Cause Analysis" },
+            { name: "Systematic Troubleshooting" },
+            { name: "Critical Thinking" },
+          ],
+        },
+        {
+          id: "communication",
+          name: "Communication & Leadership",
+          icon: "Users",
+          skills: [
+            { name: "Stakeholder Communication", highlight: true },
+            { name: "Technical Concept Simplification", highlight: true },
+            { name: "Cross-Functional Collaboration" },
+            { name: "Active Listening & Feedback" },
+            { name: "Project Presentation & Reporting" },
+            { name: "Knowledge Sharing" },
+          ],
+        },
+        {
+          id: "execution",
+          name: "Execution & Professional Excellence",
+          icon: "Sparkles",
+          skills: [
+            { name: "Agile Delivery & Prioritization", highlight: true },
+            { name: "Rapid Tech Adoption & Continuous Learning", highlight: true },
+            { name: "High Attention to Detail", highlight: true },
+            { name: "Ownership & Accountability" },
+            { name: "Time Management" },
+            { name: "Resilience Under Pressure" },
+          ],
+        },
+      ],
       categories: [
         {
           id: "data-engineering",
@@ -278,6 +439,8 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           skills: [
             { name: "Power BI & DAX", level: 92, highlight: true },
             { name: "Interactive KPI Dashboards", level: 95, highlight: true },
+            { name: "Operations Research & Optimization", level: 88, highlight: true },
+            { name: "Decision Support Systems (DSS)", level: 86 },
             { name: "Variance & Trend Analysis", level: 90 },
             { name: "Tableau & Visual Analytics", level: 82 },
             { name: "Business Logic Modeling", level: 88 },
@@ -423,75 +586,81 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     services: {
       title: "Services & Solutions",
-      subtitle: "Tailored technical capabilities delivering robust data systems and modern web applications",
+      subtitle: "Tailored engineering, document styling, presentation design, and data processing solutions",
+      viewPricing: "View Pricing Plans",
+      pricingBadge: "Clear & Competitive USD Pricing",
       items: [
         {
-          id: "data-pipelines",
-          title: "Scalable Data Pipelines & ETL/ELT",
+          id: "portfolio-dev",
+          title: "Portfolio Development & Web Apps",
           description:
-            "Design, construct, and automate resilient data pipelines that ingest, clean, and transform messy raw data into structured, production-ready data warehouses.",
+            "Design and develop modern, responsive, and blazing-fast personal websites and portfolio showcases using Next.js, React, and Tailwind CSS to attract high-value opportunities.",
           deliverables: [
-            "Custom Python & PySpark ETL/ELT workflows",
-            "Automated data quality & integrity checks",
-            "Batch and streaming pipeline architecture",
-            "Scheduled orchestration with zero downtime",
-          ],
-          icon: "GitBranch",
-        },
-        {
-          id: "bi-dashboards",
-          title: "Interactive BI Analytics & Dashboards",
-          description:
-            "Turn complex database rows into visually compelling, executive-ready dashboards in Power BI and Tableau that highlight actionable business insights.",
-          deliverables: [
-            "Dynamic KPI tracking & variance reporting",
-            "Advanced DAX calculations & data modeling",
-            "Automated scheduled data refreshes",
-            "Executive-level visual storytelling",
-          ],
-          icon: "PieChart",
-        },
-        {
-          id: "web-development",
-          title: "Full-Stack Web Applications (Next.js)",
-          description:
-            "Build modern, lightning-fast, and responsive web applications using Next.js, React, TypeScript, and Tailwind CSS tailored for user engagement and business growth.",
-          deliverables: [
-            "Single-page & multi-page Next.js applications",
-            "Mobile-first responsive UI/UX design",
-            "RESTful API & database integration (Supabase/PostgreSQL)",
-            "SEO, performance, and accessibility optimization",
+            "Custom responsive UI/UX for all screen sizes",
+            "Smooth Framer Motion interactions & rich modern aesthetics",
+            "SEO optimization, Dark/Light modes & lightning-fast deployment",
+            "Direct WhatsApp contact & portfolio booking integration",
           ],
           icon: "Layout",
+          pricingCategoryId: "portfolio",
         },
         {
-          id: "database-optimization",
-          title: "Database Modeling & Query Optimization",
+          id: "doc-formatting",
+          title: "Word & PDF Documents Formatting",
           description:
-            "Architect clean relational & NoSQL schemas, eliminate database bottlenecks, tune execution plans, and write high-efficiency SQL queries.",
+            "Format academic papers, business reports, and multi-page manuals into elegant, executive-ready documents with strict typographical consistency.",
           deliverables: [
-            "PostgreSQL & relational database schema design",
-            "SQL query profiling, indexing & tuning",
-            "Data migration & schema normalization",
-            "ACID transaction integrity and reliability",
+            "Consistent typography, custom margins, headers & footers",
+            "Custom cover page design & automated Table of Contents",
+            "Complex table formatting & bilingual Arabic/English styling",
+            "Delivered as editable .docx + print-ready PDF",
           ],
-          icon: "Cpu",
+          icon: "FileText",
+          pricingCategoryId: "documents",
+        },
+        {
+          id: "presentation-design",
+          title: "PowerPoint Presentations Design",
+          description:
+            "Create visually captivating slide decks for startup pitches, executive meetings, and graduation defenses with cohesive visual style and impactful diagrams.",
+          deliverables: [
+            "Custom brand alignment, harmonious palettes & clear typography",
+            "Infographics, structured charts & data-driven visual storytelling",
+            "Engaging slide transitions and clean animations",
+            "Delivered as editable .pptx + presentation-ready PDF",
+          ],
+          icon: "Presentation",
+          pricingCategoryId: "presentations",
+        },
+        {
+          id: "data-engineering",
+          title: "Data Engineering & ETL Pipelines",
+          description:
+            "Build automated data processing pipelines, cleaning routines, and validation workflows using Python, SQL, and Pandas to transform raw records into structured datasets.",
+          deliverables: [
+            "Automated data cleaning & deduplication workflows",
+            "Python (Pandas) scripts & optimized SQL database queries",
+            "Multi-step ETL pipelines & CSV/Excel processing",
+            "Database integration, integrity testing & clear documentation",
+          ],
+          icon: "Database",
+          pricingCategoryId: "data-engineering",
         },
       ],
     },
     education: {
-      title: "Education & Certifications",
-      subtitle: "Academic foundation in Computer Science and globally accredited industry credentials",
+      title: "Education",
+      subtitle: "Academic foundation in Operations Research, Decision Support (OR & DS) & Computer Science",
       degreesTitle: "Academic Degrees & Programs",
       degrees: [
         {
           id: "fcai-cu",
           institution: "Faculty of Computers and Artificial Intelligence, Cairo University (FCAI-CU)",
-          degree: "Bachelor of Science in Computer Science",
-          period: "2024",
+          degree: "B.Sc. Student in Operations Research & Decision Support (OR & DS)",
+          period: "Undergraduate (2022 – Present)",
           description:
-            "Rigorous coursework in Data Structures, Algorithms, Database Systems, Operating Systems, Software Engineering, and Distributed Computing.",
-          badge: "FCAI-CU",
+            "Newly specialized undergraduate student in the Operations Research and Decision Support (OR & DS) department. Coursework focuses on Mathematical Modeling, Optimization Algorithms (Linear/Non-Linear Programming), Decision Support Systems (DSS), Simulation, and Statistical Modeling, integrated with core Computer Science and Data Engineering principles.",
+          badge: "FCAI-CU · OR & DS",
           logo: "/assets/fcai-logo.png",
         },
         {
@@ -592,14 +761,8 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     testimonials: {
       title: "Testimonials",
-      subtitle: "What others say about my work and collaboration",
-      items: [
-        {
-          id: "1",
-          quote: "Mostafa is an exceptional data engineer who consistently delivers high-quality, scalable solutions.",
-          attribution: "Senior Data Scientist",
-        }
-      ]
+      subtitle: "What others say about my work, data engineering delivery, and collaboration",
+      items: [],
     },
     contact: {
       title: "Get In Touch",
@@ -630,18 +793,28 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       rights: "All rights reserved.",
       designedWith: "Mostafa Morad Portfolio",
       backToTop: "Back to Top",
+      connectTitle: "Let's Connect",
+      connectText:
+        "I'm always open to discussing new data engineering projects, BI dashboards, and web development collaborations to build reliable, scalable systems.",
+      whoTitle: "Who Am I?",
+      whoText:
+        "a Data Engineer & Software Developer passionate about building scalable data pipelines, insightful BI solutions, and high-performance web applications.",
+      tagline: "Data Engineer · Cairo, Egypt",
+      platformsTitle: "Freelance Platforms",
     },
   },
   ar: {
     nav: {
       home: "الرئيسية",
       about: "عني",
+      education: "التعليم",
+      credentials: "الشهادات",
       skills: "المهارات",
       experience: "الخبرات",
-      projects: "المشاريع",
       services: "الخدمات",
-      education: "التعليم والشهادات",
+      projects: "المشاريع",
       achievements: "الإنجازات",
+      testimonials: "التوصيات",
       contact: "تواصل معي",
     },
     hero: {
@@ -671,7 +844,7 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       subtitle: "جسر يربط بين البيانات الأولية المعقدة والحلول والتطبيقات الإنتاجية الفعالة",
       hookTitle: "من أنا",
       hookText:
-        "مهندس بيانات يركز على بناء أنظمة بيانات قابلة للتوسع، وخطوط معالجة عالية الأداء (ETL/ELT)، وتطبيقات ويب حديثة تحول البيانات المعقدة إلى رؤى قابلة للتنفيذ.",
+        "مهندس بيانات وطالب بقسم بحوث العمليات ودعم اتخاذ القرار (OR & DS) بكلية الحاسبات والذكاء الاصطناعي - جامعة القاهرة. أركز على بناء أنظمة بيانات قابلة للتوسع، وخطوط معالجة عالية الأداء (ETL/ELT)، وتطبيقات ويب حديثة تحوّل البيانات المعقدة إلى نماذج وقرارات دقيقة ورؤى قابلة للتنفيذ.",
       expertiseTitle: "الخبرات الأساسية",
       expertiseList: [
         { category: "هندسة البيانات", skills: ["ETL / ELT", "مستودعات البيانات", "SQL وتحسين الأداء", "تصميم قواعد البيانات"] },
@@ -690,9 +863,140 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       ]
     },
     skills: {
-      title: "المهارات التقنية",
-      subtitle: "مجموعة شاملة من الأدوات والتقنيات في هندسة البيانات والتحليلات وتطوير البرمجيات",
+      title: "المهارات والخبرات",
+      subtitle: "مزيج متوازن بين الدقة الهندسية، وأدوات التحليل، والقدرة الفائقة على حل المشكلات المعقدة",
       allLabel: "جميع المهارات",
+      tabs: {
+        technical: "المهارات التقنية",
+        tools: "الأدوات والأنظمة",
+        soft: "المهارات الشخصية",
+      },
+      technical: [
+        {
+          id: "data-engineering",
+          name: "هندسة وبنية البيانات",
+          icon: "Database",
+          skills: [
+            { name: "خطوط معالجة وتدفق البيانات (ETL / ELT)", highlight: true },
+            { name: "تحسين استعلامات SQL الفائقة", highlight: true },
+            { name: "بايثون للبيانات (Pandas, PySpark)", highlight: true },
+            { name: "مستودعات البيانات (BigQuery, Snowflake)", highlight: true },
+            { name: "نمذجة البيانات والمخططات النجمية (Star Schema)" },
+            { name: "قواعد البيانات العلائقية و NoSQL" },
+            { name: "اختبار ومطابقة جودة وسلامة البيانات", highlight: true },
+            { name: "معالجة البيانات الضخمة (Big Data)" },
+          ],
+        },
+        {
+          id: "bi-analytics",
+          name: "بحوث العمليات ودعم اتخاذ القرار",
+          icon: "LineChart",
+          skills: [
+            { name: "بحوث العمليات والاستمثال الرياضي", highlight: true },
+            { name: "نظم دعم اتخاذ القرار (DSS)", highlight: true },
+            { name: "البرمجة الخطية والخوارزميات الرياضية" },
+            { name: "التحليلات الإحصائية والتنبؤية" },
+            { name: "هيكلة مؤشرات الأداء ومنطق الأعمال", highlight: true },
+            { name: "تحليل الانحرافات والتنبؤ بالاتجاهات" },
+            { name: "التحليل الكمي لدعم القرار" },
+          ],
+        },
+        {
+          id: "web-dev",
+          name: "تطوير الويب المتكامل",
+          icon: "Code2",
+          skills: [
+            { name: "Next.js (App Router الحديث)", highlight: true },
+            { name: "React و Modern TypeScript", highlight: true },
+            { name: "Tailwind CSS وتصميم الواجهات المتجاوبة", highlight: true },
+            { name: "Node.js وبناء واجهات البرمجة REST", highlight: true },
+            { name: "قواعد بيانات PostgreSQL والاستعلامات" },
+            { name: "تحسين الأداء وسرعة الاستجابة و SEO" },
+          ],
+        },
+      ],
+      tools: [
+        {
+          id: "bi-tools",
+          name: "أدوات التحليل وذكاء الأعمال",
+          icon: "BarChart3",
+          skills: [
+            { name: "Power BI ودوال DAX المتقدمة", highlight: true },
+            { name: "لوحات التحكم التفاعلية ومؤشرات KPI", highlight: true },
+            { name: "برنامج تابلوه (Tableau Desktop)" },
+            { name: "إكسيل المتقدم (Power Query, DAX, Pivots)", highlight: true },
+            { name: "منظومة Apache Spark" },
+            { name: "بيئات Jupyter Notebook و Google Colab" },
+          ],
+        },
+        {
+          id: "db-cloud",
+          name: "قواعد البيانات والمنصات السحابية",
+          icon: "Cloud",
+          skills: [
+            { name: "قواعد بيانات PostgreSQL", highlight: true },
+            { name: "Google BigQuery", highlight: true },
+            { name: "Supabase BaaS", highlight: true },
+            { name: "منصة Snowflake" },
+            { name: "MySQL / SQLite" },
+            { name: "أساسيات Firebase" },
+          ],
+        },
+        {
+          id: "dev-ops",
+          name: "أدوات التطوير والأتمتة والـ DevOps",
+          icon: "Wrench",
+          skills: [
+            { name: "أتمتة سير العمل وسلاسل المهام (n8n)", highlight: true },
+            { name: "التحكم بالإصدارات Git و GitHub", highlight: true },
+            { name: "بيئات الحاويات Docker" },
+            { name: "أنظمة لينكس وسطور الأوامر (CLI)", highlight: true },
+            { name: "إدارة خطوط البيانات (Apache Airflow)" },
+            { name: "بيئات التطوير VS Code و Postman" },
+          ],
+        },
+      ],
+      soft: [
+        {
+          id: "problem-solving",
+          name: "التفكير التحليلي وحل المشكلات",
+          icon: "Brain",
+          skills: [
+            { name: "التفكير التحليلي وحل المشكلات المعقدة", highlight: true },
+            { name: "اتخاذ القرارات المبنية على البيانات", highlight: true },
+            { name: "عقلية الاستمثال والتطوير المستمر", highlight: true },
+            { name: "تحليل الأسباب الجذرية للمشاكل" },
+            { name: "استكشاف الأخطاء المنهجي (Troubleshooting)" },
+            { name: "الاستنتاج والربط المنطقي" },
+          ],
+        },
+        {
+          id: "communication",
+          name: "التواصل والعمل الجماعي",
+          icon: "Users",
+          skills: [
+            { name: "التواصل الفعّال مع مختلف الفرق وأصحاب المصلحة", highlight: true },
+            { name: "تبسيط المفاهيم التقنية المعقدة", highlight: true },
+            { name: "العمل بروح الفريق الواحد" },
+            { name: "الاستماع الفعّال وتقبل الملاحظات البنّاءة" },
+            { name: "تقديم العروض التقديمية ومناقشة الحلول" },
+            { name: "مشاركة المعرفة والخبرات" },
+          ],
+        },
+        {
+          id: "execution",
+          name: "التنفيذ وسرعة التكيف",
+          icon: "Sparkles",
+          skills: [
+            { name: "إدارة الأولويات والتسليم المرن (Agile)", highlight: true },
+            { name: "سرعة التعلم ومواكبة أحدث التقنيات", highlight: true },
+            { name: "الدقة الفائقة والاهتمام بأدق التفاصيل", highlight: true },
+            { name: "تحمل المسؤولية وروح المبادرة (Ownership)" },
+            { name: "إدارة الوقت والالتزام بالمواعيد" },
+            { name: "المرونة والعمل تحت ضغط" },
+          ],
+        },
+      ],
       categories: [
         {
           id: "data-engineering",
@@ -715,6 +1019,8 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
           skills: [
             { name: "Power BI و دوال DAX", level: 92, highlight: true },
             { name: "لوحات التحكم التفاعلية ومؤشرات KPI", level: 95, highlight: true },
+            { name: "بحوث العمليات والاستمثال (Operations Research)", level: 88, highlight: true },
+            { name: "نظم دعم اتخاذ القرار (Decision Support Systems)", level: 86 },
             { name: "تحليل الفروقات والاتجاهات", level: 90 },
             { name: "تابلوه (Tableau) والتصور البصري", level: 82 },
             { name: "نمذجة المنطق التجاري", level: 88 },
@@ -860,75 +1166,81 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     services: {
       title: "الخدمات والحلول",
-      subtitle: "حلول هندسية مصممة خصيصاً لبناء أنظمة بيانات قوية وتطبيقات ويب سريعة وحديثة",
+      subtitle: "حلول تقنية وتصميمية مخصصة تشمل تطوير المواقع، تنسيق المستندات، العروض التقديمية، وهندسة البيانات",
+      viewPricing: "عرض باقات وخطط الأسعار",
+      pricingBadge: "باقات واضحة ومناسبة",
       items: [
         {
-          id: "data-pipelines",
-          title: "خطوط معالجة البيانات القابلة للتوسع (ETL/ELT)",
+          id: "portfolio-dev",
+          title: "تطوير مواقع البورتفوليو والويب",
           description:
-            "تصميم وبناء وأتمتة خطوط تدفق بيانات مرنة تقوم باستخراج وتنظيف وتحويل البيانات الضخمة ونقلها إلى مستودعات بيانات عالية الجاهزية.",
+            "تصميم وبرمجة مواقع شخصية وبورتفوليو احترافية وسريعة باستخدام Next.js و React لعرض أعمالك ومهاراتك وجذب العملاء والفرص.",
           deliverables: [
-            "تدفقات ETL/ELT مخصصة بواسطة بايثون و PySpark",
-            "قواعد فحص ومطابقة آلية لضمان سلامة ونزاهة البيانات",
-            "معمارية معالجة دفعية (Batch) وتدفقية (Stream)",
-            "جدولة وتنفيذ آلي مستمر دون أي توقف",
-          ],
-          icon: "GitBranch",
-        },
-        {
-          id: "bi-dashboards",
-          title: "لوحات تحكم ذكاء الأعمال والتحليلات التفاعلية",
-          description:
-            "تحويل الجداول والأرقام المعقدة إلى لوحات تحكم بصرية تفاعلية عبر Power BI تساعد صناع القرار على استشراف الفرص والحد من المخاطر.",
-          deliverables: [
-            "متابعة مؤشرات الأداء الرئيسية (KPIs) وتحليل التباين",
-            "حسابات ونماذج متقدمة باستخدام دوال DAX",
-            "تحديث دوري ومؤتمت للبيانات",
-            "تصميم بصري جذاب يبرز القصة وراء الأرقام",
-          ],
-          icon: "PieChart",
-        },
-        {
-          id: "web-development",
-          title: "تطوير تطبيقات الويب الحديثة (Next.js)",
-          description:
-            "بناء مواقع وتطبيقات ويب فائقة السرعة، متجاوبة ومحسنة لمحركات البحث باستخدام أحدث تقنيات Next.js و React و Tailwind CSS.",
-          deliverables: [
-            "تطبيقات أحادية ومتعددة الصفحات بأعلى سرعة وأداء",
-            "تصميم مخصص للهواتف المحمولة وتجربة مستخدم سلسة",
-            "ربط واجهات البرمجة وقواعد البيانات (PostgreSQL/Supabase)",
-            "توافق كامل مع المعايير الحديثة وإمكانية الوصول",
+            "تصميم مخصص ومتجاوب بالكامل مع كافة الشاشات والموبايل",
+            "تفاعلات بصرية سلسة ومؤثرات أنيميشن راقية وجماليات حديثة",
+            "تهيئة محركات البحث SEO، والوضع الليلي، ونشر فوري أونلاين",
+            "ربط مباشر مع الواتساب للتواصل والطلب السريع",
           ],
           icon: "Layout",
+          pricingCategoryId: "portfolio",
         },
         {
-          id: "database-optimization",
-          title: "نمذجة قواعد البيانات وتحسين سرعة الاستعلامات",
+          id: "doc-formatting",
+          title: "تنسيق مستندات Word & PDF",
           description:
-            "تصميم مخططات قواعد بيانات محكمة، وإزالة اختناقات الأداء، وضبط خطط التنفيذ وفهارس البحث لضمان استجابة لحظية.",
+            "تحويل المسودات والنصوص إلى تقارير وأبحاث ومستندات رسمية منسقة بأعلى معايير الدقة والترتيب والطباعة الاحترافية.",
           deliverables: [
-            "تصميم مخططات قواعد البيانات العلائقية (PostgreSQL)",
-            "فحص الاستعلامات وبناء الفهارس لتسريع العمليات",
-            "ترحيل وهيكلة البيانات وضمان سلامة المعاملات",
-            "تطبيق شروط ACID للأمان والموثوقية القصوى",
+            "تنسيق احترافي شامل للخطوط، العناوين، الهوامش، والترويسات",
+            "تصميم صفحة غلاف مخصصة وفهرس محتويات آلي التحديث",
+            "تنسيق الجداول وتنسيق ثنائي باللغتين العربية والإنجليزية",
+            "تسليم ملف Word قابل للتعديل بالإضافة لنسخة PDF جاهزة للطباعة",
           ],
-          icon: "Cpu",
+          icon: "FileText",
+          pricingCategoryId: "documents",
+        },
+        {
+          id: "presentation-design",
+          title: "تصميم عروض PowerPoint التقديمية",
+          description:
+            "تصميم سلايدات وعروض تقديمية بصرية جذابة للمشاريع، الشركات، الاجتماعات، ومناقشات التخرج بأسلوب بصري منظم ومقنع.",
+          deliverables: [
+            "هوية بصرية متناسقة وألوان وخطوط مريحة للعين ومناسبة للموضوع",
+            "رسوم بيانية، إنفوجرافيك، ومخططات توضيحية لتبسيط المعلومات",
+            "حركات وانتقالات احترافية تضيف حيوية وتفاعلية للعرض",
+            "تسليم ملف PowerPoint أصلي مفتوح المصدر + نسخة PDF للعرض السريع",
+          ],
+          icon: "Presentation",
+          pricingCategoryId: "presentations",
+        },
+        {
+          id: "data-engineering",
+          title: "هندسة ومعالجة البيانات (Data Engineering)",
+          description:
+            "أتمتة تنظيف وهيكلة البيانات، وبناء خطوط معالجة وتدفق ETL باستخدام بايثون و SQL لتحويل البيانات الفوضوية إلى جداول منظمة.",
+          deliverables: [
+            "تنظيف واستخراج البيانات وفحص الجودة تلقائياً (Data Quality)",
+            "معالجة متقدمة بـ Python و Pandas واستعلامات SQL محكمة",
+            "بناء خطوط تدفق ومعالجة ملفات CSV وإكسيل وقواعد البيانات",
+            "توثيق واضح للكود والخطوات وسهولة إعادة التشغيل",
+          ],
+          icon: "Database",
+          pricingCategoryId: "data-engineering",
         },
       ],
     },
     education: {
-      title: "التعليم والشهادات",
-      subtitle: "خلفية أكاديمية متينة في علوم الحاسب واعتمادات مهنية معترف بها دولياً",
+      title: "التعليم",
+      subtitle: "أساس أكاديمي متين في بحوث العمليات ودعم اتخاذ القرار (OR & DS) وعلوم الحاسب",
       degreesTitle: "الدرجات والبرامج الأكاديمية",
       degrees: [
         {
           id: "fcai-cu",
           institution: "كلية الحاسبات والذكاء الاصطناعي - جامعة القاهرة (FCAI-CU)",
-          degree: "بكالوريوس علوم الحاسب (Computer Science)",
-          period: "2024",
+          degree: "طالب بكالوريوس — قسم بحوث العمليات ودعم اتخاذ القرار (OR & DS)",
+          period: "طالب جامعي (2022 – حتى الآن)",
           description:
-            "دراسة معمقة في هياكل البيانات، الخوارزميات، نظم قواعد البيانات، نظم التشغيل، هندسة البرمجيات، والحوسبة الموزعة.",
-          badge: "FCAI-CU",
+            "طالب متخصص حديثاً في قسم بحوث العمليات ودعم اتخاذ القرار (Operations Research & Decision Support - OR & DS). تشمل الدراسة الأكاديمية النمذجة الرياضية، خوارزميات الاستمثال والبرمجة الخطية (Optimization)، نظم دعم القرار (DSS)، المحاكاة، والنماذج العشوائية، بالتكامل مع أسس علوم الحاسب وهندسة البيانات.",
+          badge: "FCAI-CU · OR & DS",
           logo: "/assets/fcai-logo.png",
         },
         {
@@ -1029,14 +1341,8 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
     },
     testimonials: {
       title: "التوصيات والآراء",
-      subtitle: "ما يقوله الآخرون عن العمل معي والمشاريع المشتركة",
-      items: [
-        {
-          id: "1",
-          quote: "مصطفى مهندس بيانات استثنائي يقدم دائماً حلولاً عالية الجودة وقابلة للتوسع.",
-          attribution: "كبير علماء البيانات",
-        }
-      ]
+      subtitle: "ما يقوله الآخرون عن العمل معي والمشاريع المشتركة ودقة التنفيذ",
+      items: [],
     },
     contact: {
       title: "تواصل معي",
@@ -1067,6 +1373,14 @@ export const portfolioContent: Record<Language, PortfolioContent> = {
       rights: "جميع الحقوق محفوظة.",
       designedWith: "Mostafa Morad Portfolio",
       backToTop: "العودة للأعلى",
+      connectTitle: "لنتواصل",
+      connectText:
+        "يسعدني دائماً مناقشة مشاريع هندسة البيانات الجديدة، ولوحات ذكاء الأعمال، والتعاون في تطوير الويب لبناء أنظمة موثوقة وقابلة للتوسع.",
+      whoTitle: "من أنا؟",
+      whoText:
+        "مهندس بيانات ومطور برمجيات شغوف ببناء خطوط بيانات قابلة للتوسع، وحلول ذكاء أعمال دقيقة، وتطبيقات ويب عالية الأداء.",
+      tagline: "مهندس بيانات · القاهرة، مصر",
+      platformsTitle: "منصات العمل الحر",
     },
   },
 };
@@ -1076,15 +1390,33 @@ export const personalInfo = {
     en: "Mostafa Morad Sayed",
     ar: "مصطفى مراد سيد",
   },
-  email: "mostafamoradsayed@gmail.com",
-  phone: "+20 101 234 5678",
-  phoneClean: "+201012345678",
-  whatsapp: "https://wa.me/201012345678",
+  email: "moradahmed854@gmail.com",
+  phone: "+20 101 590 5993",
+  phoneClean: "+201015905993",
+  whatsapp: "https://wa.me/201015905993",
   location: {
     en: "Cairo, Egypt",
     ar: "القاهرة، مصر",
   },
   linkedin: "https://www.linkedin.com/in/mostafa-morad-sayed",
-  github: "https://github.com/MostafaMoradSayed",
+  github: "https://github.com/mostafamorad1",
   cvFile: "/Mostafa_Morad_CV.pdf",
+  freelancePlatforms: [
+    { id: "upwork", name: "Upwork", url: "https://www.upwork.com/freelancers/~01cf535b92c8102dfb", icon: "/platforms/upwork.png" },
+    { id: "freelancer", name: "Freelancer", url: "https://www.freelancer.com/u/mostafamorad7?frm=mostafamorad7&sb=t", icon: "/platforms/freelancer.png" },
+    { id: "khamsat", name: "Khamsat", url: "https://khamsat.com/user/mostafa_morad12", icon: "/platforms/khamsat.png" },
+    { id: "nafezly", name: "Nafezly", url: "https://nafezly.com/u/Mostafa_Morad", icon: "/platforms/nafezly.png" },
+    { id: "mostaql", name: "Mostaql", url: "https://mostaql.com/u/Mostafa_Morad12", icon: "/platforms/mostaql.png" },
+    { id: "freelanceyard", name: "FreelanceYard", url: "https://www.freelanceyard.com/en/freelancers/mostafa-mostafa-2", icon: "/platforms/freelanceyard.png" },
+  ],
 };
+
+export const whatsappWelcomeMessage: Record<Language, string> = {
+  en: "Hello Mostafa, I'm contacting you from your portfolio website. I'd like to discuss a project / opportunity with you.",
+  ar: "مرحباً مصطفى، أتواصل معك من خلال موقع البورتفوليو الخاص بك. أرغب في مناقشة مشروع / فرصة عمل معك.",
+};
+
+export function getWhatsAppLink(lang: Language): string {
+  return `${personalInfo.whatsapp}?text=${encodeURIComponent(whatsappWelcomeMessage[lang])}`;
+}
+

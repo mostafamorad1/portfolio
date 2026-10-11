@@ -47,13 +47,16 @@ export default function Hero() {
           >
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-3 mb-6">
-              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-indigo-500/10 text-indigo-400 rounded border border-indigo-500/20">
+              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-indigo-50/90 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 rounded border border-indigo-200/90 dark:border-indigo-800/60 shadow-sm backdrop-blur-sm">
                 {isRtl ? "مهندس بيانات" : "DATA ENGINEER"}
               </span>
-              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded border border-slate-300 dark:border-slate-700">
+              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-white/85 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded border border-slate-200/90 dark:border-slate-700 shadow-sm backdrop-blur-sm">
                 DEPI
               </span>
-              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded border border-slate-300 dark:border-slate-700">
+              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-indigo-50/90 dark:bg-indigo-950/60 text-indigo-700 dark:text-cyan-300 rounded border border-indigo-200/90 dark:border-indigo-800/60 shadow-sm backdrop-blur-sm">
+                {isRtl ? "طالب قسم OR & DS" : "OR & DS @ FCAI-CU"}
+              </span>
+              <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-white/85 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded border border-slate-200/90 dark:border-slate-700 shadow-sm backdrop-blur-sm">
                 {isRtl ? "مطور متكامل" : "FULL-STACK"}
               </span>
             </div>
@@ -104,15 +107,15 @@ export default function Hero() {
                   opacity: profileOpacity,
                   transformOrigin: "center top"
                 }}
-                className="relative w-[280px] sm:w-[320px] lg:w-[360px] aspect-[3/4] shadow-[0_0_40px_rgba(245,158,11,0.1)] border border-amber-500/30 bg-slate-200 dark:bg-slate-900 overflow-hidden rounded-[24px]"
+                className="relative w-[280px] sm:w-[320px] lg:w-[360px] aspect-square shadow-[0_0_50px_rgba(99,102,241,0.25)] dark:shadow-[0_0_50px_rgba(99,102,241,0.35)] border-2 border-indigo-500/30 dark:border-indigo-400/30 bg-white overflow-hidden rounded-full"
               >
               <Image
-                src="/profile.jpg"
-                alt="Profile"
+                src="/profile-suit.png"
+                alt="Mostafa Morad"
                 fill
                 sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 360px"
                 priority
-                className="object-cover object-top"
+                className="object-cover object-center"
               />
               </motion.div>
             </div>
